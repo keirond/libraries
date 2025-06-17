@@ -11,6 +11,7 @@
 
 	<modules>
 		<module>kafka-consumer</module>
+		<module>kafka-performance-testing</module>
 	</modules>
 
 	<properties>
