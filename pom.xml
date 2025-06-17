@@ -3,14 +3,13 @@
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>vn.keiron.practice</groupId>
+	<groupId>org.keiron</groupId>
 	<artifactId>libraries</artifactId>
 	<version>${revision}</version>
 	<packaging>pom</packaging>
 	<url>${env.url}</url>
 
 	<modules>
-		<module>simulator</module>
 		<module>kafka-consumer</module>
 	</modules>
 
@@ -58,66 +57,10 @@
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-clean-plugin</artifactId>
-					<version>${maven.clean.version}</version>
-					<executions>
-						<execution>
-							<id>clean-tmp</id>
-							<phase>clean</phase>
-							<goals>
-								<goal>clean</goal>
-							</goals>
-							<configuration>
-								<filesets>
-									<fileset>
-										<directory>${project.basedir}/tmp</directory>
-									</fileset>
-								</filesets>
-							</configuration>
-						</execution>
-						<execution>
-							<id>clean-log</id>
-							<phase>clean</phase>
-							<goals>
-								<goal>clean</goal>
-							</goals>
-							<configuration>
-								<filesets>
-									<fileset>
-										<directory>${project.basedir}/log</directory>
-									</fileset>
-								</filesets>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>${maven.surfire.version}</version>
 					<configuration>
 						<!-- includes, excludes -->
-					</configuration>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-checkstyle-plugin</artifactId>
-					<version>${maven.checkstyle.version}</version>
-					<executions>
-						<execution>
-							<phase>validate</phase>
-							<goals>
-								<goal>check</goal>
-							</goals>
-						</execution>
-					</executions>
-					<configuration>
-						<configLocation>google_checks.xml</configLocation>
-						<severity>warning</severity>
-						<outputDirectory>${project.build.directory}/checkstyle-reports</outputDirectory>
-						<outputFileFormat>html</outputFileFormat>
 					</configuration>
 				</plugin>
 

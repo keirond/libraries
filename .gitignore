@@ -1,18 +1,6 @@
 .idea/
-*.iws
-*.iml
-*.ipr
-
 .vscode/
-
-.apt_generated
-.classpath
-.factorypath
 .project
-.settings/
-.springBeans
-.sts4-cache
-
 .DS_Store
 
 target/
