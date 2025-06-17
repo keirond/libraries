@@ -11,7 +11,7 @@
 
     <groupId>org.keiron.libraries</groupId>
     <artifactId>cassandra-performance-testing</artifactId>
-    <name>${revision}</name>
+    <version>${revision}</version>
 
     <properties>
         <cassandra.java.driver.version>4.19.0</cassandra.java.driver.version>

@@ -11,10 +11,14 @@
 
     <groupId>org.keiron.libraries</groupId>
     <artifactId>kafka-performance-testing</artifactId>
-    <name>${revision}</name>
+    <version>${revision}</version>
 
     <properties>
 
     </properties>
+
+    <dependencies>
+
+    </dependencies>
 
 </project>
