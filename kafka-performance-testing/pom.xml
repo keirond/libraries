@@ -14,11 +14,20 @@
     <version>${revision}</version>
 
     <properties>
-
+        <kafka.version>4.0.0</kafka.version>
     </properties>
 
     <dependencies>
-
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>${kafka.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>connect-api</artifactId>
+            <version>${kafka.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
