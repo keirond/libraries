@@ -16,14 +16,15 @@
 	<properties>
 		<revision>0.0.1</revision>
 		<java.version>21</java.version>
-		<spring.boot.version>3.4.0</spring.boot.version>
+
+		<spring.boot.version>3.5.0</spring.boot.version>
+
 		<maven.compiler.version>3.14.0</maven.compiler.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<maven.clean.version>3.4.0</maven.clean.version>
+		<maven.dependency.version>3.8.1</maven.dependency.version>
 		<maven.surfire.version>3.5.3</maven.surfire.version>
 		<maven.deploy.version>3.1.4</maven.deploy.version>
-		<maven.checkstyle.version>3.5.0</maven.checkstyle.version>
 	</properties>
 
 	<dependencyManagement>
@@ -53,6 +54,12 @@
 						<source>${maven.compiler.source}</source>
 						<target>${maven.compiler.target}</target>
 					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>${maven.dependency.version}</version>
 				</plugin>
 
 				<plugin>
