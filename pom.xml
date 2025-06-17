@@ -12,6 +12,7 @@
 	<modules>
 		<module>kafka-consumer</module>
 		<module>kafka-performance-testing</module>
+		<module>cassandra-performance-testing</module>
 	</modules>
 
 	<properties>
@@ -23,6 +24,7 @@
 		<maven.compiler.version>3.14.0</maven.compiler.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.dependency.version>3.8.1</maven.dependency.version>
 		<maven.surfire.version>3.5.3</maven.surfire.version>
 		<maven.deploy.version>3.1.4</maven.deploy.version>
