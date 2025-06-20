@@ -7,14 +7,13 @@
 	<artifactId>libraries</artifactId>
 	<version>${revision}</version>
 	<packaging>pom</packaging>
-	<url>${env.url}</url>
 
 	<modules>
+		<module>configuration-loader</module>
 		<module>kafka-consumer</module>
+		<module>kafka-producer</module>
 		<module>kafka-performance-testing</module>
 		<module>cassandra-performance-testing</module>
-		<module>kafka-producer</module>
-		<module>configuration-loader</module>
 	</modules>
 
 	<properties>
@@ -84,26 +83,5 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
-	<profiles>
-		<profile>
-			<id>dev</id>
-			<properties>
-				<env>dev</env>
-				<env.url>https://dev.io</env.url>
-			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-		</profile>
-
-		<profile>
-			<id>prod</id>
-			<properties>
-				<env>prod</env>
-				<env.url>https://prod.io</env.url>
-			</properties>
-		</profile>
-	</profiles>
 
 </project>
