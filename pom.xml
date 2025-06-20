@@ -9,7 +9,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>configuration-loader</module>
+		<module>configuration-loading-system</module>
 		<module>kafka-consumer</module>
 		<module>kafka-producer</module>
 		<module>kafka-performance-testing</module>
