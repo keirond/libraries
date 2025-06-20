@@ -14,6 +14,7 @@
 		<module>kafka-performance-testing</module>
 		<module>cassandra-performance-testing</module>
 		<module>kafka-producer</module>
+		<module>configuration-loader</module>
 	</modules>
 
 	<properties>
