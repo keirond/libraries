@@ -43,6 +43,7 @@
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}-${project.version}-${profile.name}</finalName>
         <resources>
             <resource>
                 <directory>${config.dir}</directory>
@@ -65,12 +66,14 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
+                <profile.name>default</profile.name>
                 <config.dir>${project.basedir}/config</config.dir>
             </properties>
         </profile>
         <profile>
             <id>dev</id>
             <properties>
+                <profile.name>dev</profile.name>
                 <config.dir>${project.basedir}/config/dev</config.dir>
             </properties>
         </profile>
