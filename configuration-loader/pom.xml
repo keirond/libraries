@@ -13,6 +13,16 @@
     <artifactId>configuration-loader</artifactId>
     <version>${revision}</version>
 
-    <properties/>
+    <properties>
+        <jackson.version>2.19.0</jackson.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
