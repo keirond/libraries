@@ -13,7 +13,6 @@
     <artifactId>configuration-loader</artifactId>
     <version>${revision}</version>
 
-    <properties>
-    </properties>
+    <properties/>
 
 </project>
