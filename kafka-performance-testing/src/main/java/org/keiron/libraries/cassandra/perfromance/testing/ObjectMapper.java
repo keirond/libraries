@@ -1,4 +1,4 @@
-package org.keiron.libraries.cassandra.perfromance.testing.common;
+package org.keiron.libraries.cassandra.perfromance.testing;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
