@@ -42,41 +42,4 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <finalName>${project.artifactId}-${project.version}-${profile.name}</finalName>
-        <resources>
-            <resource>
-                <directory>${config.dir}</directory>
-                <includes>
-                    <include>**/*.yml</include>
-                    <include>**/*.yaml</include>
-                    <include>**/*.properties</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
-    </build>
-
-    <profiles>
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <profile.name>default</profile.name>
-                <config.dir>${project.basedir}/config</config.dir>
-            </properties>
-        </profile>
-        <profile>
-            <id>dev</id>
-            <properties>
-                <profile.name>dev</profile.name>
-                <config.dir>${project.basedir}/config/dev</config.dir>
-            </properties>
-        </profile>
-    </profiles>
-
 </project>

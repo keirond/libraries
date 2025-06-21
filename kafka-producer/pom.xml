@@ -14,5 +14,7 @@
     <version>${revision}</version>
 
     <properties/>
+    <dependencies/>
+    <build/>
 
 </project>
