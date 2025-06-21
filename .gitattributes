@@ -2,9 +2,6 @@
 *.sh text eol=lf
 *.cmd text eol=crlf
 
-mvnw text eol=lf
-mvnw.cmd text eol=crlf
-
 *.ico binary
 *.jar binary
 *.jpg binary
