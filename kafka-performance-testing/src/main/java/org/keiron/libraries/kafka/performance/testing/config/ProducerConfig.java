@@ -6,9 +6,8 @@ import lombok.Data;
 
 @Data
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
-public class KafkaConsumerConfig {
+public class ProducerConfig {
 
   private String bootstrapServers;
-  private String numberOfConsumers;
 
 }

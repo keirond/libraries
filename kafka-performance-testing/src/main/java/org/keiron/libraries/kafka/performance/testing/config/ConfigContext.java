@@ -11,15 +11,15 @@ import java.io.InputStream;
 @Slf4j
 public class ConfigContext {
 
-  private static final String KAFKA_PRODUCER_CONFIG_PATH = "kafka-producer.yaml";
-  public static KafkaProducerConfig kafkaProducerConfig;
+  private static final String PRODUCER_CONFIG_PATH = "kafka-producer.yaml";
+  public static ProducerConfig producerConfig;
 
-  private static final String KAFKA_CONSUMER_CONFIG_PATH = "kafka-consumer.yaml";
-  public static KafkaConsumerConfig kafkaConsumerConfig;
+  private static final String CONSUMER_CONFIG_PATH = "kafka-consumer.yaml";
+  public static ConsumerConfig consumerConfig;
 
   static {
-    kafkaProducerConfig = load(KAFKA_PRODUCER_CONFIG_PATH, KafkaProducerConfig.class);
-    kafkaConsumerConfig = load(KAFKA_CONSUMER_CONFIG_PATH, KafkaConsumerConfig.class);
+    producerConfig = load(PRODUCER_CONFIG_PATH, ProducerConfig.class);
+    consumerConfig = load(CONSUMER_CONFIG_PATH, ConsumerConfig.class);
   }
 
   private static <T> T load(String resourcePath, Class<T> clazz) {

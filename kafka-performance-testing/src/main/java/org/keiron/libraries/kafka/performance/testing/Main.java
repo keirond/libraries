@@ -6,8 +6,8 @@ public class Main {
 
   public static void main(String[] args) {
 
-    var kafkaProducerConfig = ConfigContext.kafkaProducerConfig;
-    var kafkaConsumerConfig = ConfigContext.kafkaConsumerConfig;
+    var producerConfig = ConfigContext.producerConfig;
+    var consumerConfig = ConfigContext.consumerConfig;
   }
 
 }
