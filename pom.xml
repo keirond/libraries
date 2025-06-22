@@ -1,106 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.keiron</groupId>
-	<artifactId>libraries</artifactId>
-	<version>${revision}</version>
-	<packaging>pom</packaging>
+    <groupId>org.keiron</groupId>
+    <artifactId>libraries</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
 
-	<modules>
-		<module>configuration-loader</module>
-		<module>kafka-consumer</module>
-		<module>kafka-producer</module>
-		<module>kafka-performance-testing</module>
-		<module>cassandra-performance-testing</module>
-	</modules>
+    <modules>
+        <module>kafka-consumer</module>
+        <module>kafka-producer</module>
+        <module>kafka-performance-testing</module>
+        <module>cassandra-performance-testing</module>
+    </modules>
 
-	<properties>
-		<revision>0.0.1</revision>
-		<java.version>21</java.version>
+    <properties>
+        <revision>0.0.1</revision>
+        <java.version>21</java.version>
 
-		<maven.compiler.version>3.14.0</maven.compiler.version>
-		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.dependency.version>3.8.1</maven.dependency.version>
-		<maven.surfire.version>3.5.3</maven.surfire.version>
-		<maven.deploy.version>3.1.4</maven.deploy.version>
-	</properties>
+        <maven.compiler.version>3.14.0</maven.compiler.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.dependency.version>3.8.1</maven.dependency.version>
+        <maven.surfire.version>3.5.3</maven.surfire.version>
+        <maven.deploy.version>3.1.4</maven.deploy.version>
+    </properties>
 
-	<dependencyManagement/>
+    <dependencyManagement/>
 
-	<build>
-		<finalName>${project.artifactId}-${project.version}-${profile.name}</finalName>
-		<resources>
-			<resource>
-				<directory>${config.dir}</directory>
-				<includes>
-					<include>**/*.yml</include>
-					<include>**/*.yaml</include>
-					<include>**/*.properties</include>
-				</includes>
-			</resource>
-			<resource>
-				<directory>src/main/resources</directory>
-			</resource>
-		</resources>
+    <build>
+        <finalName>${project.artifactId}-${project.version}-${profile.name}</finalName>
+        <resources>
+            <resource>
+                <directory>${config.dir}</directory>
+                <includes>
+                    <include>**/*.yml</include>
+                    <include>**/*.yaml</include>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
 
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>${maven.compiler.version}</version>
-					<configuration>
-						<source>${maven.compiler.source}</source>
-						<target>${maven.compiler.target}</target>
-					</configuration>
-				</plugin>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.version}</version>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                    </configuration>
+                </plugin>
 
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-dependency-plugin</artifactId>
-					<version>${maven.dependency.version}</version>
-				</plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${maven.dependency.version}</version>
+                </plugin>
 
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>${maven.surfire.version}</version>
-					<configuration>
-						<!-- includes, excludes -->
-					</configuration>
-				</plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven.surfire.version}</version>
+                    <configuration>
+                        <!-- includes, excludes -->
+                    </configuration>
+                </plugin>
 
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-deploy-plugin</artifactId>
-					<version>${maven.deploy.version}</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven.deploy.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
-	<profiles>
-		<profile>
-			<id>default</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<profile.name>default</profile.name>
-				<config.dir>${project.basedir}/config</config.dir>
-			</properties>
-		</profile>
-		<profile>
-			<id>dev</id>
-			<properties>
-				<profile.name>dev</profile.name>
-				<config.dir>${project.basedir}/config/dev</config.dir>
-			</properties>
-		</profile>
-	</profiles>
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profile.name>default</profile.name>
+                <config.dir>${project.basedir}/config</config.dir>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profile.name>dev</profile.name>
+                <config.dir>${project.basedir}/config/dev</config.dir>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>
