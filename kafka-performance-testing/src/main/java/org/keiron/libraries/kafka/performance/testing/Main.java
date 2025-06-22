@@ -1,10 +1,13 @@
 package org.keiron.libraries.kafka.performance.testing;
 
+import org.keiron.libraries.kafka.performance.testing.config.ConfigContext;
+
 public class Main {
 
   public static void main(String[] args) {
 
-    System.out.print("Hello and welcome!");
+    var kafkaProducerConfig = ConfigContext.kafkaProducerConfig;
+    var kafkaConsumerConfig = ConfigContext.kafkaConsumerConfig;
   }
 
 }

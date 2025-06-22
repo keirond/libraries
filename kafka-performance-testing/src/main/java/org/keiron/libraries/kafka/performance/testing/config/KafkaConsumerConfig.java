@@ -5,9 +5,10 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
 @Data
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
 public class KafkaConsumerConfig {
 
   private String bootstrapServers;
+  private String numberOfConsumers;
 
 }
