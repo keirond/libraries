@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>org.keiron.libraries</groupId>
-    <artifactId>configuration-loading-system</artifactId>
+    <artifactId>auto-configuration</artifactId>
     <version>${revision}</version>
 
     <properties>
