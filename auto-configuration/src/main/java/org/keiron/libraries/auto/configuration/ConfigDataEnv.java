@@ -1,12 +1,12 @@
-package org.keiron.libraries.configuration.loader.config;
+package org.keiron.libraries.auto.configuration;
 
 import java.util.ArrayList;
 
-class ConfigDataEnvironment {
+class ConfigDataEnv {
 
   static final String LOCATION_PROPERTY = "config.location";
 
-  static final String ON_NOT_FOUND_PROPERTY = "config.on-not-found";
+  static final String ON_NOT_FOUND_PROPERTY = "config.location.on-not-found";
 
   static final ConfigDataLocation[] DEFAULT_SEARCH_LOCATIONS;
 

@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>org.keiron.libraries</groupId>
-    <artifactId>kafka-producer</artifactId>
+    <artifactId>core</artifactId>
     <version>${revision}</version>
 
     <properties/>

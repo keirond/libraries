@@ -1,4 +1,4 @@
-package org.keiron.libraries.configuration.loader;
+package org.keiron.libraries.auto.configuration;
 
 public class Main {
 
