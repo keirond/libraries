@@ -11,10 +11,12 @@ import java.io.InputStream;
 @Slf4j
 public class ConfigContext {
 
-  private static final String PRODUCER_CONFIG_PATH = "kafka-producer.yaml";
+  private static final String PRODUCER_CONFIG_PATH = ConfigEnv.getEnvConfig("PRODUCER_CONFIG_PATH",
+      "kafka-producer.yaml");
   public static ProducerConfig producerConfig;
 
-  private static final String CONSUMER_CONFIG_PATH = "kafka-consumer.yaml";
+  private static final String CONSUMER_CONFIG_PATH = ConfigEnv.getEnvConfig("PRODUCER_CONFIG_PATH",
+      "kafka-consumer.yaml");
   public static ConsumerConfig consumerConfig;
 
   static {
