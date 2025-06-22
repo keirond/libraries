@@ -1,4 +1,4 @@
-package org.keiron.libraries.cassandra.perfromance.testing;
+package org.keiron.libraries.kafka.performance.testing;
 
 public class Main {
 

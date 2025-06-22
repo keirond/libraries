@@ -1,4 +1,4 @@
-package org.keiron.libraries.cassandra.perfromance.testing;
+package org.keiron.libraries.kafka.performance.testing;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
