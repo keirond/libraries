@@ -1,5 +1,6 @@
 # non-null string, format = host1:port1,host2:port2,...
 bootstrap-servers: "localhost:9092"
+#key-serializer, value-serializer
 
 # long (bytes), default = 33554432 (32Mb)
 # the global pool of all unsent records.
