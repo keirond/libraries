@@ -10,4 +10,7 @@ public class ProducerConfig {
 
   private String bootstrapServers;
 
+  private Long bufferMemory;
+  private Long maxBlockMs;
+
 }

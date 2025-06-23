@@ -1,1 +1,26 @@
-bootstrap-servers: 10
+# non-null string, format = host1:port1,host2:port2,...
+bootstrap-servers: "localhost:9092"
+
+# long (bytes), default = 33554432
+buffer-memory: 33554432
+max-block-ms:
+# string [none, gzip, snappy, lz4, or zstd], default = none
+compression-type: none
+
+# int (times), default = 2147483647
+# Users should generally prefer to leave this config unset and instead use delivery.timeout.ms to control retry behavior.
+retries: 2147483647
+delivery-timeout-ms:
+enable-idempotence:
+max-in-flight-requests-per-connection:
+
+#ssl-key-password: null
+#ssl-keystore-certificate-chain: null
+
+#ssl-keystore-key: null
+#ssl-keystore-location: null
+#ssl-keystore-password: null
+
+#ssl-truststore-certificates: null
+#ssl-truststore-location: null
+#ssl-truststore-password: null
