@@ -2,43 +2,32 @@
 bootstrap-servers: "localhost:9092"
 #key-serializer, value-serializer
 
-# long (bytes), default = 33554432 (32Mb)
-# the global pool of all unsent records.
-buffer-memory: 33554432
-# long (ms), default = 60000 (1 minute)
-max-block-ms: 60000
+# int (bytes), default = 1
+fetch-min-bytes: 1
+# int (bytes), default = 52428800 (50 Mb)
+fetch-max-bytes: 52428800
+# int (ms), default = 500
+fetch-max-wait-ms: 500
 
-# string [none, gzip, snappy, lz4, or zstd], default = none
-compression-type: none
-compression-gzip-level: -1 # [1,…,9] or -1, default = -1
-compression-lz4-level: 9 # [1,…,17], default = 9
-compression-zstd-level: 3 # [-131072,…,22], default = 3
+# group-id
+# group-protocol, group-remote-assignor
+# group-instance-id
+# partition-assignment-strategy
 
-# int (bytes), default = 16384
-# controls when a batch is ready to send (per partition).
-batch-size: 16384
-# long (ms), default = 5
-linger-ms: 5
+# int, default = 500
+max-poll-records: 500
+# int (ms), default = 300000 (5 minutes)
+max-poll-interval-ms: 300000
 
-# int (bytes), default = 1048576 (1Mb)
-# limits the total size of the request sent to the broker (can include multiple batches).
-max-request-size: 1048576
-# int (bytes), default = 131072 (128 kibibytes), -1 OS default will be used.
-send-buffer-bytes: 131072
-# int (bytes), default = 32768 (32 kibibytes), -1 OS default will be used.
-receive-buffer-bytes: 32768
+# int (ms), default = 3000 (3 seconds)
+heartbeat-interval-ms: 3000
+# int (ms), default = 45000 (45 seconds)
+session-timeout-ms: 45000
+
+# int (bytes), default = 65536 (64 kibibytes), -1 OS default will be used.
+receive-buffer-bytes: 65536
 # int (ms), default = 30000 (30 seconds)
 request-timeout-ms: 30000
-
-# partitioner-class for custom producer.Partitioner
-partitioner-ignore-keys: false
-
-# string [all, -1, 0, 1], default = all
-acks: all
-# int (times), default = 2147483647
-# Users should generally prefer to leave this config unset
-# and instead use delivery.timeout.ms to control retry behavior.
-retries: 2147483647
 # long (ms), default = 100, base delay before the first retry
 # This value is the initial backoff value and will increase exponentially for each failed request,
 # up to the retry.backoff.max.ms value.
@@ -46,20 +35,27 @@ retry-backoff-ms: 100
 # long (ms), default = 1000 (1 second), upper limit of the delay
 # used as a constant backoff without any exponential increase
 retry-backoff-max-ms: 1000
-# int (ms), default = 120000 (2 minutes)
-delivery-timeout-ms: 120000
-# boolean, default = true if no conflicting configurations are set
-enable-idempotence: true
-# int, default = 5
-max-in-flight-requests-per-connection: 5
 
-#transaction-id: null
-#transaction-timeout-ms: 60000 (1 minutes)
+# boolean, default = true
+allow-auto-create-topics: true
+# string [latest, earliest, none, by_duration:PnDTnHnMn.nS], default = latest
+auto-offset-reset: latest
+# boolean, default = true
+enable-auto-commit: true
+auto-commit-interval-ms: 5000 # int, default = 5000 (5 seconds)
+# boolean, default = true
+# Whether internal topics matching a subscribed pattern should be excluded from the subscription.
+exclude-internal-topics: true
+
+#isolation-level: [read_committed, read_uncommitted]
 
 # string, default = ""
 client-id: "performance-testing"
+# client-rack
 # long (ms), default = 540000 (9 minutes)
 connections-max-idle-ms: 540000
+# int (ms), default = 60000 (1 minutes)
+default-api-timeout-ms: 60000
 # long (ms), default = 50, base delay before the first retry
 # This value is the initial backoff value and will increase exponentially for each failed request,
 # up to the retry.backoff.max.ms value.
@@ -72,7 +68,6 @@ enable-metrics-push: true # true by default
 #metric.**!!
 
 #metadata.**!!
-#partitioner.**!!
 
 #client-dns-lookup: use_all_dns_ips
 #security.**!!
