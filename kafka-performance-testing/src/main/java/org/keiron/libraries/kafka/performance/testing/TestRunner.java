@@ -18,6 +18,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.LockSupport;
+import java.util.stream.IntStream;
 
 import static org.keiron.libraries.kafka.performance.testing.monitor.PrometheusMetricName.PRODUCE_MESSAGE;
 
@@ -34,30 +36,29 @@ class TestRunner {
       stringProducers.add(new StringProducer());
     }
 
+    Duration duration = config.getDuration();
+    int iterations = config.getIterations();
+    var atomicIterations = new AtomicInteger(iterations == -1 ? 0 : iterations);
+
+    var start = Instant.now();
     try (ExecutorService executor = Executors.newFixedThreadPool(vus)) {
-      Duration duration = config.getDuration();
-      int iterations = config.getIterations();
 
-      var atomicIterations = iterations == -1 ? new AtomicInteger() : new AtomicInteger(iterations);
-      var start = Instant.now();
-
-      int it = 0;
-      while (Duration.between(start, Instant.now()).compareTo(duration) < 0 &&
-                 (iterations == -1 || (it = atomicIterations.getAndDecrement()) > 0)) {
+      IntStream.range(0, vus).parallel().forEach(index -> {
         try {
-          int currIt = it;
           executor.submit(() -> {
-            int idx = iterations == -1 ? Math.floorMod(atomicIterations.getAndIncrement(), vus) :
-                      Math.floorMod(currIt, vus);
-            StringProducer producer = stringProducers.get(idx);
-            runTask(producer);
+            while (Duration.between(start, Instant.now()).compareTo(duration) < 0 &&
+                       (iterations == -1 || atomicIterations.getAndDecrement() > 0)) {
+              StringProducer producer = stringProducers.get(index);
+              runTask(producer);
+              LockSupport.parkNanos(1_000);
+            }
           });
         } catch (RejectedExecutionException e) {
           log.error("Rejected execution {}", e.getMessage());
         }
-      }
-
+      });
     }
+    log.info("Run complete in {}", Duration.between(start, Instant.now()).toString());
   }
 
   private static void runTask(StringProducer stringProducer) {
