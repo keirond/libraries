@@ -2,9 +2,11 @@ package org.keiron.libraries.kafka.performance.testing;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.micrometer.core.instrument.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.keiron.libraries.kafka.performance.testing.config.ConfigContext;
 import org.keiron.libraries.kafka.performance.testing.config.TestPlanConfig;
+import org.keiron.libraries.kafka.performance.testing.monitor.PrometheusMonitor;
 import org.keiron.libraries.kafka.performance.testing.producer.StringProducer;
 
 import java.time.Duration;
@@ -16,6 +18,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.keiron.libraries.kafka.performance.testing.monitor.PrometheusMetricName.PRODUCE_MESSAGE;
 
 @Slf4j
 class TestRunner {
@@ -55,12 +59,18 @@ class TestRunner {
   }
 
   private static void runTask(StringProducer stringProducer) {
-    String topic = config.getProducer().getTopic();
-    var message = new TestMessage().setId(UUID.randomUUID().toString());
+    var startTime = Instant.now();
+    boolean status = true;
     try {
+      String topic = config.getProducer().getTopic();
+      var message = new TestMessage().setId(UUID.randomUUID().toString());
       stringProducer.send(topic, OBJECT_MAPPER.writeValueAsString(message));
     } catch (JsonProcessingException e) {
+      status = false;
       log.warn("Error parsing {}", e.getMessage());
+    } finally {
+      PrometheusMonitor.timer(PRODUCE_MESSAGE.getName(), startTime,
+          Tag.of("status", String.valueOf(status)));
     }
   }
 

@@ -24,14 +24,19 @@ public class ConfigContext {
       "kafka-consumer.yaml");
   public static ConsumerConfig consumerConfig;
 
-  private static final String TEST_PLAN_PATH = ConfigEnv.getEnvConfig("TEST_PLAN_NO",
-      "plans/test-plan.yaml");
+  private static final String TEST_PLAN_CONFIG_PATH = ConfigEnv.getEnvConfig(
+      "TEST_PLAN_CONFIG_PATH", "plans/test-plan.yaml");
   public static TestPlanConfig testPlanConfig;
+
+  private static final String MONITOR_CONFIG_PATH = ConfigEnv.getEnvConfig("MONITOR_CONFIG_PATH",
+      "monitor.yaml");
+  public static MonitorConfig monitorConfig;
 
   static {
     producerConfig = load(PRODUCER_CONFIG_PATH, ProducerConfig.class);
     consumerConfig = load(CONSUMER_CONFIG_PATH, ConsumerConfig.class);
-    testPlanConfig = load(TEST_PLAN_PATH, TestPlanConfig.class);
+    testPlanConfig = load(TEST_PLAN_CONFIG_PATH, TestPlanConfig.class);
+    monitorConfig = load(MONITOR_CONFIG_PATH, MonitorConfig.class);
   }
 
   private static <T> T load(String resourcePath, Class<T> clazz) {
