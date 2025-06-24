@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import java.io.IOException;
 import java.time.Duration;
 
-public class FriendlyDurationDeserializer extends JsonDeserializer<Duration> {
+class FriendlyDurationDeserializer extends JsonDeserializer<Duration> {
 
   @Override
   public Duration deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
