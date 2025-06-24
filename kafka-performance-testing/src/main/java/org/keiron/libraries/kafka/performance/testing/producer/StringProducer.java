@@ -25,10 +25,11 @@ public class StringProducer implements Producer<String> {
       producer.send(record, (onCompletion, exception) -> {
         if (exception != null) {
           log.warn("Error sending record {}", exception.getMessage());
-        } else {
-          log.info("Record sent to topic {}, partition {}, offset {}, at {}", onCompletion.topic(),
-              onCompletion.partition(), onCompletion.offset(), onCompletion.timestamp());
         }
+//        else {
+//          log.info("Record sent to topic {}, partition {}, offset {}, at {}", onCompletion.topic(),
+//              onCompletion.partition(), onCompletion.offset(), onCompletion.timestamp());
+//        }
       });
 
     } catch (Exception e) {

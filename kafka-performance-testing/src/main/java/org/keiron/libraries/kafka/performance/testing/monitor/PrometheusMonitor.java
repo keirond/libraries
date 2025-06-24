@@ -3,12 +3,14 @@ package org.keiron.libraries.kafka.performance.testing.monitor;
 import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.Tags;
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry;
+import lombok.Getter;
 
 import java.time.Duration;
 import java.time.Instant;
 
 public class PrometheusMonitor {
 
+  @Getter
   private static final PrometheusMeterRegistry registry;
 
   static {
