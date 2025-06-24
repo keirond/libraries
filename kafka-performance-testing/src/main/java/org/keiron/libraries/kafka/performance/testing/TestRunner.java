@@ -41,12 +41,14 @@ class TestRunner {
       var atomicIterations = iterations == -1 ? new AtomicInteger() : new AtomicInteger(iterations);
       var start = Instant.now();
 
+      int it = 0;
       while (Duration.between(start, Instant.now()).compareTo(duration) < 0 &&
-                 (iterations == -1 || atomicIterations.get() > 0)) {
+                 (iterations == -1 || (it = atomicIterations.getAndDecrement()) > 0)) {
         try {
+          int currIt = it;
           executor.submit(() -> {
-            int idx = iterations == -1 ? Math.floorMod(atomicIterations.incrementAndGet(), vus) :
-                      Math.floorMod(atomicIterations.decrementAndGet(), vus);
+            int idx = iterations == -1 ? Math.floorMod(atomicIterations.getAndIncrement(), vus) :
+                      Math.floorMod(currIt, vus);
             StringProducer producer = stringProducers.get(idx);
             runTask(producer);
           });

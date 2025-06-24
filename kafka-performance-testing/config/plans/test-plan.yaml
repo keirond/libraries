@@ -1,5 +1,6 @@
 vus: 1
 duration: 5s
+iterations: 1
 
 producer:
   topic: spaceZ
