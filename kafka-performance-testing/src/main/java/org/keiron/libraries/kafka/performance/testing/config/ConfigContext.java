@@ -1,17 +1,10 @@
 package org.keiron.libraries.kafka.performance.testing.config;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
-import org.keiron.libraries.kafka.performance.testing.utils.FriendlyDurationDeserializer;
+import org.keiron.libraries.kafka.performance.testing.utils.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Duration;
 
 @Slf4j
 public class ConfigContext {
@@ -44,16 +37,10 @@ public class ConfigContext {
       if (is == null) {
         throw new IllegalArgumentException(String.format("Resource '%s' not found", resourcePath));
       }
-      var mapper = new ObjectMapper(new YAMLFactory());
-      mapper.registerModule(new JavaTimeModule());
-      mapper.registerModule(
-          new SimpleModule().addDeserializer(Duration.class, new FriendlyDurationDeserializer()));
-      mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-      mapper.enable(SerializationFeature.INDENT_OUTPUT);
-      mapper.configure(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS, false);
 
-      var config = mapper.readValue(is, clazz);
-      log.info("Loaded config from {}:\n{}", resourcePath, mapper.writeValueAsString(config));
+      var config = ObjectMapper.getMapper().readValue(is, clazz);
+      log.info("Loaded config from {}:\n{}", resourcePath,
+          ObjectMapper.getMapper().writeValueAsString(config));
       return config;
     } catch (IOException ex) {
       throw new IllegalStateException("Failed to load YAML config from: " + resourcePath, ex);
