@@ -1,2 +1,5 @@
 vus: 1
 duration: 30s
+
+producer:
+  topic: spaceZ
