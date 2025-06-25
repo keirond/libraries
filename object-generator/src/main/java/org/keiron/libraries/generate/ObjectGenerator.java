@@ -1,8 +1,6 @@
 package org.keiron.libraries.generate;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.mifmif.common.regex.Generex;
-import org.apache.commons.lang3.CharSet;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -21,7 +19,7 @@ public class ObjectGenerator implements Generator<Map<String, Object>> {
 
   private static final SecureRandom random = new SecureRandom();
   private static final AtomicLong counter = new AtomicLong();
-  private static final String CHARACTERS = CharSet.getInstance("a-z", "A-Z", "0-9").toString();
+  private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
   private final JsonNode messageSchema = SchemaContext.messageSchema;
 
@@ -73,8 +71,7 @@ public class ObjectGenerator implements Generator<Map<String, Object>> {
   private String generateString(int length, String regex) {
     if (length < 1)
       throw new IllegalArgumentException("Length must be >= 1");
-    if (regex != null)
-      return new Generex(regex).random(1, length);
+
     var sb = new StringBuilder(length);
     for (int i = 0; i < length; i++) {
       int index = random.nextInt(CHARACTERS.length());
