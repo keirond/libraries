@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/keirond/libraries/refs/heads/main/json-schema/field-generator.schema.json",
-  "title": "Field Generator",
+  "$id": "https://raw.githubusercontent.com/keirond/libraries/refs/heads/main/json-schema/object-generator.schema.json",
+  "title": "Object Generator",
   "type": "object",
   "properties": {
     "metadata": { "type": "object", "additionalProperties": true },
