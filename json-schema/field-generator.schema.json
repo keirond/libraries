@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/keirond/libraries/refs/heads/main/json-schema/field-generator.schema.json",
+  "title": "Field Generator",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "fields": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z0-9_]*$": {
+          "type": "object",
+          "required": [
+            "_type"
+          ],
+          "properties": {
+            "_type": {
+              "type": "string",
+              "enum": [
+                "uuid",
+                "now",
+                "constant",
+                "incremental",
+                "random_string",
+                "random_int",
+                "random_float",
+                "random_pick",
+                "custom_expression"
+              ]
+            },
+            "_format": {
+              "description": "Used for 'now'",
+              "enum": [
+                "ISO8601",
+                "epoch",
+                "epoch_millis"
+              ]
+            },
+            "_value": {
+              "description": "Used for 'constant'",
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "null"
+              ]
+            },
+            "_start": {
+              "description": "Used for 'incremental'",
+              "type": "integer"
+            },
+            "_length": {
+              "description": "Used for 'random_string'",
+              "type": "integer",
+              "minimum": 1
+            },
+            "_regex": {
+              "description": "Used for 'random_string'",
+              "type": "string"
+            },
+            "_min": {
+              "description": "Used for 'random_int', 'random_float'",
+              "type": "number"
+            },
+            "_max": {
+              "description": "Used for 'random_int', 'random_float'",
+              "type": "number"
+            },
+            "_precision": {
+              "description": "Used for 'random_float'",
+              "type": "integer",
+              "minimum": 0
+            },
+            "_values": {
+              "description": "Used for 'random_pick'",
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "null"
+                ]
+              }
+            },
+            "_expression": {
+              "description": "Used for 'custom_expression'",
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "output": {
+      "type": "string",
+      "enum": [
+        "json",
+        "template"
+      ]
+    },
+    "template": {
+      "description": "Used for 'template output'",
+      "type": "string"
+    }
+  },
+  "required": [
+    "fields"
+  ],
+  "additionalProperties": true
+}
