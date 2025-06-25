@@ -1,13 +1,4 @@
 {
   "$schema": "https://raw.githubusercontent.com/keirond/libraries/refs/heads/main/json-schema/field-generator.schema.json",
-  "fields": {
-    "event": { "_type": "constant", "value": "login" },
-    "user":  { "type": "random_string", "length": 8 },
-    "ip":    { "type": "random_ipv4" },
-    "timestamp": { "type": "now", "format": "ISO8601" },
-    "device": {
-      "type": "random_pick",
-      "values": ["android", "ios", "web"]
-    }
-  }
+  "fields": { }
 }
