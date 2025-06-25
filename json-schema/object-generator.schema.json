@@ -25,7 +25,12 @@
             },
             "_format": {
               "description": "Used for 'now'",
+              "type": "string",
               "enum": [ "ISO8601", "epoch", "epoch_millis" ]
+            },
+            "_timezone": {
+              "description": "Used for 'now'",
+              "type": "string"
             },
             "_value": {
               "description": "Used for 'constant'",

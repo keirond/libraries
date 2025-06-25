@@ -1,8 +1,13 @@
 package org.keiron.libraries.generate;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.apache.commons.lang3.CharSet;
 
 import java.security.SecureRandom;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -10,7 +15,7 @@ import java.util.UUID;
 public class ObjectGenerator implements Generator<Map<String, Object>> {
 
   private static final SecureRandom random = new SecureRandom();
-  private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  private static final String CHARACTERS = CharSet.getInstance("a-z", "A-Z", "0-9").toString();
 
   private final JsonNode messageSchema = SchemaContext.messageSchema;
 
@@ -20,19 +25,14 @@ public class ObjectGenerator implements Generator<Map<String, Object>> {
     var fieldsNode = messageSchema.get("fields");
     fieldsNode.properties().forEach(entry -> {
       var key = entry.getKey();
-      var valueNode = entry.getValue();
-      var type = valueNode.get("_type").asText();
+      var node = entry.getValue();
+      var type = node.path("_type").asText();
       switch (type) {
         case "uuid" -> result.put(key, UUID.randomUUID().toString());
-        case "random_string" -> {
-          int length = 1;
-          String regex = null;
-          if (valueNode.hasNonNull("_length"))
-            length = valueNode.get("_length").asInt();
-          if (valueNode.hasNonNull("_regex"))
-            regex = valueNode.get("_regex").asText();
-          result.put(key, generateString(length, regex));
-        }
+        case "now" -> result.put(key, generateNow(node.path("_format").asText("ISO8601"),
+            node.path("_timezone").asText("UTC")));
+        case "random_string" -> result.put(key,
+            generateString(node.path("_length").asInt(1), node.path("_regex").asText(null)));
       }
     });
     return result;
@@ -47,6 +47,24 @@ public class ObjectGenerator implements Generator<Map<String, Object>> {
       sb.append(CHARACTERS.charAt(index));
     }
     return sb.toString();
+  }
+
+  private Object generateNow(String format, String timezone) {
+    ZoneId id = timezone != null ? ZoneId.of(timezone) : ZoneOffset.UTC;
+    var now = Instant.now();
+    return switch (format) {
+      case "epoch" -> now.getEpochSecond();
+      case "epoch_millis" -> now.toEpochMilli();
+      case "ISO8601" -> now.toString();
+      default -> {
+        try {
+          var formatter = DateTimeFormatter.ofPattern(format).withZone(id);
+          yield formatter.format(now);
+        } catch (IllegalArgumentException e) {
+          throw new IllegalArgumentException("Invalid format: " + format);
+        }
+      }
+    };
   }
 
 }

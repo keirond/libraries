@@ -1,5 +1,5 @@
 # non-null string, format = host1:port1,host2:port2,...
-bootstrap-servers: "localhost:9092"
+bootstrap-servers: "10.20.3.62:9092"
 #key-serializer, value-serializer
 
 # long (bytes), default = 33554432 (32Mb)
