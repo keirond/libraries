@@ -19,6 +19,8 @@ public class PrometheusExporter {
     server.createContext("/metrics", httpExchange -> {
       String response = registry.scrape();
       byte[] bytes = response.getBytes();
+      httpExchange.getResponseHeaders()
+          .set("Content-Type", "text/plain; version=0.0.4; charset=utf-8");
       httpExchange.sendResponseHeaders(200, bytes.length);
       try (OutputStream os = httpExchange.getResponseBody()) {
         os.write(bytes);
