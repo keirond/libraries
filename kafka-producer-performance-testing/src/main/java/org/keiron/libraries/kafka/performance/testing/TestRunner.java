@@ -1,12 +1,13 @@
 package org.keiron.libraries.kafka.performance.testing;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micrometer.core.instrument.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.keiron.libraries.generate.ObjectGenerator;
 import org.keiron.libraries.kafka.performance.testing.config.ConfigContext;
 import org.keiron.libraries.kafka.performance.testing.config.TestPlanConfig;
 import org.keiron.libraries.kafka.performance.testing.monitor.PrometheusMonitor;
+import org.keiron.libraries.kafka.performance.testing.producer.AvroProducer;
+import org.keiron.libraries.kafka.performance.testing.producer.Producer;
+import org.keiron.libraries.kafka.performance.testing.producer.ProtobufProducer;
 import org.keiron.libraries.kafka.performance.testing.producer.StringProducer;
 
 import java.time.Duration;
@@ -25,16 +26,19 @@ import static org.keiron.libraries.kafka.performance.testing.monitor.PrometheusM
 @Slf4j
 class TestRunner {
 
-  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
   private static final TestPlanConfig config = ConfigContext.testPlanConfig;
-  private static final List<StringProducer> stringProducers = new ArrayList<>();
-  private static final ObjectGenerator objectGenerator = new ObjectGenerator();
+  private static final List<Producer<?>> producers = new ArrayList<>();
 
   public static void run() {
     int vus = config.getVus();
     int noOfProducers = Math.min(Math.max(1, vus / 2000), 100);
     for (int i = 0; i < noOfProducers; i++) {
-      stringProducers.add(new StringProducer());
+      var producer = switch (config.getProducer().getProducerType()) {
+        case "avro" -> new AvroProducer();
+        case "protobuf" -> new ProtobufProducer();
+        default -> new StringProducer();
+      };
+      producers.add(new StringProducer());
     }
 
     Duration duration = config.getDuration();
@@ -61,20 +65,10 @@ class TestRunner {
   }
 
   private static void runTask(int index) {
-    StringProducer producer = stringProducers.get(index);
     var startTime = Instant.now();
-    boolean status = true;
-    try {
-      var topic = config.getProducer().getTopic();
-      var message = objectGenerator.generate();
-      producer.send(topic, OBJECT_MAPPER.writeValueAsString(message));
-    } catch (Exception e) {
-      status = false;
-      log.warn("Error processing '{}'", e.getMessage());
-    } finally {
-      PrometheusMonitor.timer(PRODUCE_MESSAGE.getName(), startTime,
-          Tag.of("status", String.valueOf(status)));
-    }
+    boolean status = producers.get(index).runTest(config.getProducer().getTopic());
+    PrometheusMonitor.timer(PRODUCE_MESSAGE.getName(), startTime,
+        Tag.of("status", String.valueOf(status)));
   }
 
 }

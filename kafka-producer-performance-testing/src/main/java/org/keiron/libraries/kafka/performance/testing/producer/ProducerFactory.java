@@ -7,6 +7,7 @@ import org.keiron.libraries.kafka.performance.testing.config.ConfigContext;
 import org.keiron.libraries.kafka.performance.testing.config.ProducerConfig;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.apache.kafka.clients.producer.ProducerConfig.*;
 
@@ -14,14 +15,18 @@ class ProducerFactory {
 
   private static final ProducerConfig producerConfig = ConfigContext.producerConfig;
 
-  static <K, V> Producer<K, V> createProducer(Serializer<K> keySerializer,
-      Serializer<V> valueSerializer) {
-
+  private static Map<String, Object> defaultConfig() {
     var configMap = new HashMap<String, Object>();
     configMap.put(BOOTSTRAP_SERVERS_CONFIG, producerConfig.getBootstrapServers());
     configMap.put(COMPRESSION_TYPE_CONFIG, producerConfig.getCompressionType());
     configMap.put(ACKS_CONFIG, producerConfig.getAcks());
+    return configMap;
+  }
 
+  static <K, V> Producer<K, V> createProducer(Map<String, String> extendConfigs,
+      Serializer<K> keySerializer, Serializer<V> valueSerializer) {
+    var configMap = defaultConfig();
+    configMap.putAll(extendConfigs);
     return new KafkaProducer<>(configMap, keySerializer, valueSerializer);
   }
 
