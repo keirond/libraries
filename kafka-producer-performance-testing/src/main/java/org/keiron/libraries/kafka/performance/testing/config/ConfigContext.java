@@ -14,9 +14,9 @@ public class ConfigContext {
       "kafka-producer.yaml");
   public static ProducerConfig producerConfig;
 
-  private static final String CONSUMER_CONFIG_PATH = ConfigEnv.getEnvConfig("PRODUCER_CONFIG_PATH",
-      "kafka-consumer.yaml");
-  public static ConsumerConfig consumerConfig;
+  private static final String KAFKA_SCHEMA_REGISTRY_CONFIG_PATH = ConfigEnv.getEnvConfig(
+      "KAFKA_SCHEMA_REGISTRY_CONFIG_PATH", "kafka-schema-registry.yaml");
+  public static SchemaRegistryConfig schemaRegistryConfig;
 
   private static final String TEST_PLAN_CONFIG_PATH = ConfigEnv.getEnvConfig(
       "TEST_PLAN_CONFIG_PATH", "plans/test-plan.yaml");
@@ -31,7 +31,7 @@ public class ConfigContext {
 
   static {
     producerConfig = load(PRODUCER_CONFIG_PATH, ProducerConfig.class);
-    consumerConfig = load(CONSUMER_CONFIG_PATH, ConsumerConfig.class);
+    schemaRegistryConfig = load(KAFKA_SCHEMA_REGISTRY_CONFIG_PATH, SchemaRegistryConfig.class);
     testPlanConfig = load(TEST_PLAN_CONFIG_PATH, TestPlanConfig.class);
     monitorConfig = load(MONITOR_CONFIG_PATH, MonitorConfig.class);
 

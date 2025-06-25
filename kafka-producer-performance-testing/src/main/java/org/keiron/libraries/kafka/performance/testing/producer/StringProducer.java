@@ -6,6 +6,8 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.keiron.libraries.generate.ObjectGenerator;
 
+import java.util.Map;
+
 @Slf4j
 public class StringProducer implements Producer<String> {
 
@@ -15,7 +17,8 @@ public class StringProducer implements Producer<String> {
   private final org.apache.kafka.clients.producer.Producer<String, String> producer;
 
   public StringProducer() {
-    producer = ProducerFactory.createProducer(null, new StringSerializer(), new StringSerializer());
+    producer = ProducerFactory.createProducer(Map.of(), new StringSerializer(),
+        new StringSerializer());
   }
 
   @Override
@@ -46,6 +49,12 @@ public class StringProducer implements Producer<String> {
       log.warn("Error processing '{}'", e.getMessage());
       return false;
     }
+  }
+
+  @Override
+  public void close() {
+    producer.flush();
+    producer.close();
   }
 
 }

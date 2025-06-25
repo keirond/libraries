@@ -8,4 +8,6 @@ public interface Producer<T> {
 
   boolean runTest(String topic);
 
+  void close();
+
 }

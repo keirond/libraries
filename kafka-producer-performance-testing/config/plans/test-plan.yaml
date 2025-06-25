@@ -3,4 +3,5 @@ duration: 30s
 iterations: 1
 
 producer:
+  producer-type: string
   topic: spaceZ

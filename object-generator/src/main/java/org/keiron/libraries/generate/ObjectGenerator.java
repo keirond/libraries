@@ -31,41 +31,45 @@ public class ObjectGenerator implements Generator<Map<String, Object>> {
       var key = entry.getKey();
       var node = entry.getValue();
       var type = node.path("_type").asText("");
-      var value = switch (type) {
-        case "uuid" -> UUID.randomUUID().toString();
-        case "now" ->
-            getNow(node.path("_format").asText("ISO8601"), node.path("_timezone").asText("UTC"));
-        case "constant" -> getSimpleObject(node.path("_value"));
-        case "incremental" -> node.path("_start").asLong(0) + counter.getAndIncrement();
-        case "random_string" ->
-            generateString(node.path("_length").asInt(1), node.path("_regex").asText(null));
-        case "random_int" -> {
-          long min = node.path("_min").asLong(0);
-          long max = node.path("_max").asLong(0);
-          yield min + random.nextLong(max - min);
-        }
-        case "random_float" -> {
-          double min = node.path("_min").asDouble(0.0);
-          double max = node.path("_max").asDouble(0.0);
-          int precision = node.path("_precision").asInt(0);
-          yield BigDecimal.valueOf(min + random.nextDouble(max - min))
-                    .setScale(precision, RoundingMode.HALF_UP).doubleValue();
-        }
-        case "random_pick" -> {
-          var list = new ArrayList<>();
-          var curr = node.path("_values");
-          if (curr.isArray()) {
-            for (JsonNode v : curr)
-              list.add(getSimpleObject(v));
-          }
-          yield list.get(random.nextInt(list.size()));
-        }
-        //        case "custom_expression" -> null;
-        default -> null;
-      };
+      var value = generateField(type, node);
       result.put(key, value);
     });
     return result;
+  }
+
+  public Object generateField(String type, JsonNode node) {
+    return switch (type) {
+      case "uuid" -> UUID.randomUUID().toString();
+      case "now" ->
+          getNow(node.path("_format").asText("ISO8601"), node.path("_timezone").asText("UTC"));
+      case "constant" -> getSimpleObject(node.path("_value"));
+      case "incremental" -> node.path("_start").asLong(0) + counter.getAndIncrement();
+      case "random_string" ->
+          generateString(node.path("_length").asInt(1), node.path("_regex").asText(null));
+      case "random_int" -> {
+        long min = node.path("_min").asLong(0);
+        long max = node.path("_max").asLong(0);
+        yield min + random.nextLong(max - min);
+      }
+      case "random_float" -> {
+        double min = node.path("_min").asDouble(0.0);
+        double max = node.path("_max").asDouble(0.0);
+        int precision = node.path("_precision").asInt(0);
+        yield BigDecimal.valueOf(min + random.nextDouble(max - min))
+                  .setScale(precision, RoundingMode.HALF_UP).doubleValue();
+      }
+      case "random_pick" -> {
+        var list = new ArrayList<>();
+        var curr = node.path("_values");
+        if (curr.isArray()) {
+          for (JsonNode v : curr)
+            list.add(getSimpleObject(v));
+        }
+        yield list.get(random.nextInt(list.size()));
+      }
+      //        case "custom_expression" -> null;
+      default -> null;
+    };
   }
 
   private String generateString(int length, String regex) {

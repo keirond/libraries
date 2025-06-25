@@ -23,7 +23,7 @@ class ProducerFactory {
     return configMap;
   }
 
-  static <K, V> Producer<K, V> createProducer(Map<String, String> extendConfigs,
+  static <K, V> Producer<K, V> createProducer(Map<String, Object> extendConfigs,
       Serializer<K> keySerializer, Serializer<V> valueSerializer) {
     var configMap = defaultConfig();
     configMap.putAll(extendConfigs);

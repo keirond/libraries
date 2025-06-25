@@ -33,12 +33,11 @@ class TestRunner {
     int vus = config.getVus();
     int noOfProducers = Math.min(Math.max(1, vus / 2000), 100);
     for (int i = 0; i < noOfProducers; i++) {
-      var producer = switch (config.getProducer().getProducerType()) {
+      producers.add(switch (config.getProducer().getProducerType()) {
         case "avro" -> new AvroProducer();
         case "protobuf" -> new ProtobufProducer();
         default -> new StringProducer();
-      };
-      producers.add(new StringProducer());
+      });
     }
 
     Duration duration = config.getDuration();
@@ -61,6 +60,7 @@ class TestRunner {
         }
       });
     }
+    producers.forEach(Producer::close);
     log.info("Run complete in {}", Duration.between(start, Instant.now()).toString());
   }
 

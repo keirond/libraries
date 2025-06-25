@@ -1,23 +1,32 @@
 package org.keiron.libraries.kafka.performance.testing.producer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.confluent.kafka.serializers.KafkaAvroSerializer;
+import com.google.protobuf.Message;
+import io.confluent.kafka.serializers.protobuf.KafkaProtobufSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.keiron.libraries.generate.ObjectGenerator;
+import org.keiron.libraries.kafka.performance.testing.config.ConfigContext;
+import org.keiron.libraries.kafka.performance.testing.config.SchemaRegistryConfig;
+
+import java.util.HashMap;
 
 @Slf4j
-public class ProtobufProducer implements Producer<Object> {
+public class ProtobufProducer<T extends Message> implements Producer<Object> {
 
   private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
   private static final ObjectGenerator objectGenerator = new ObjectGenerator();
 
-  private final org.apache.kafka.clients.producer.Producer<String, Object> producer;
+  private static final SchemaRegistryConfig schemaRegistryConfig = ConfigContext.schemaRegistryConfig;
 
-  public ProtobufProducer() {
-    producer = ProducerFactory.createProducer(null, new StringSerializer(),
-        new KafkaAvroSerializer());
+  private final org.apache.kafka.clients.producer.Producer<String, T> producer;
+
+  public <T extends Message> ProtobufProducer() {
+    var extendConfigs = new HashMap<String, Object>();
+    extendConfigs.put("schema.registry.url", schemaRegistryConfig.getUrl());
+    producer = ProducerFactory.createProducer(extendConfigs, new StringSerializer(),
+        new KafkaProtobufSerializer<T>()); // TODO
   }
 
   @Override
@@ -31,10 +40,10 @@ public class ProtobufProducer implements Producer<Object> {
     try {
       producer.send(record, (onCompletion, exception) -> {
         if (exception != null)
-          log.warn("Error sending avro record {}", exception.getMessage());
+          log.warn("Error sending proto record {}", exception.getMessage());
       });
     } catch (Exception e) {
-      log.warn("Exception sending avro record {}", e.getMessage());
+      log.warn("Exception sending proto record {}", e.getMessage());
     }
   }
 
@@ -49,6 +58,12 @@ public class ProtobufProducer implements Producer<Object> {
     //      log.warn("Error processing '{}'", e.getMessage());
     //      return false;
     //    }
+  }
+
+  @Override
+  public void close() {
+    producer.flush();
+    producer.close();
   }
 
 }
