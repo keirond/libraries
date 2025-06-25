@@ -2,6 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/keirond/libraries/refs/heads/main/json-schema/field-generator.schema.json",
   "fields": {
     "id": { "_type": "uuid" },
-    "value": { "_type": "random_string", "_length": 1 }
+    "value": { "_type": "random_string", "_length": 10 }
   }
 }

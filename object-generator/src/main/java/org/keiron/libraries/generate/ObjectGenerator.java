@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class MessageGenerator implements FieldGenerator<Map<String, Object>> {
+public class ObjectGenerator implements Generator<Map<String, Object>> {
 
   private static final SecureRandom random = new SecureRandom();
   private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-  private final JsonNode messageSchema = FieldContext.messageSchema;
+  private final JsonNode messageSchema = SchemaContext.messageSchema;
 
   @Override
   public Map<String, Object> generate() {
@@ -25,8 +25,12 @@ public class MessageGenerator implements FieldGenerator<Map<String, Object>> {
       switch (type) {
         case "uuid" -> result.put(key, UUID.randomUUID().toString());
         case "random_string" -> {
-          int length = valueNode.get("_length").asOptional().map(JsonNode::asInt).orElse(1);
-          String regex = valueNode.get("_regex").asOptional().map(JsonNode::asText).orElse(null);
+          int length = 1;
+          String regex = null;
+          if (valueNode.hasNonNull("_length"))
+            length = valueNode.get("_length").asInt();
+          if (valueNode.hasNonNull("_regex"))
+            regex = valueNode.get("_regex").asText();
           result.put(key, generateString(length, regex));
         }
       }

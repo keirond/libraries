@@ -1,6 +1,6 @@
 package org.keiron.libraries.generate;
 
-interface FieldGenerator<T> {
+interface Generator<T> {
 
   T generate();
 

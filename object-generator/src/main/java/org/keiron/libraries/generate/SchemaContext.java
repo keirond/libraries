@@ -7,12 +7,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Slf4j
-public class FieldContext {
+public class SchemaContext {
 
   public static JsonNode messageSchema;
 
   public static void load(String resourcePath) {
-    try (InputStream is = FieldContext.class.getClassLoader().getResourceAsStream(resourcePath)) {
+    try (InputStream is = SchemaContext.class.getClassLoader().getResourceAsStream(resourcePath)) {
       if (is == null) {
         throw new IllegalArgumentException(String.format("Resource '%s' not found", resourcePath));
       }

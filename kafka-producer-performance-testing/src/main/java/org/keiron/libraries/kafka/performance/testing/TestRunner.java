@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micrometer.core.instrument.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.keiron.libraries.generate.MessageGenerator;
+import org.keiron.libraries.generate.ObjectGenerator;
 import org.keiron.libraries.kafka.performance.testing.config.ConfigContext;
 import org.keiron.libraries.kafka.performance.testing.config.TestPlanConfig;
 import org.keiron.libraries.kafka.performance.testing.monitor.PrometheusMonitor;
@@ -29,7 +29,7 @@ class TestRunner {
   private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
   private static final TestPlanConfig config = ConfigContext.testPlanConfig;
   private static final List<StringProducer> stringProducers = new ArrayList<>();
-  private static final MessageGenerator messageGenerator = new MessageGenerator();
+  private static final ObjectGenerator objectGenerator = new ObjectGenerator();
 
   public static void run() {
     int vus = config.getVus();
@@ -67,12 +67,14 @@ class TestRunner {
     boolean status = true;
     try {
       String topic = config.getProducer().getTopic();
-      var message = messageGenerator.generate();
-      log.info("Producing '{}' to '{}'", topic, OBJECT_MAPPER.writeValueAsString(message));
-      //      stringProducer.send(topic, OBJECT_MAPPER.writeValueAsString(message));
+      var message = objectGenerator.generate();
+      stringProducer.send(topic, OBJECT_MAPPER.writeValueAsString(message));
     } catch (JsonProcessingException e) {
       status = false;
       log.warn("Error parsing {}", e.getMessage());
+    } catch (Exception e) {
+      status = false;
+      log.warn("Error processing '{}'", e.getMessage());
     } finally {
       PrometheusMonitor.timer(PRODUCE_MESSAGE.getName(), startTime,
           Tag.of("status", String.valueOf(status)));
