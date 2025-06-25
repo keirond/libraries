@@ -71,12 +71,7 @@
             },
             {
               "if": { "properties": { "_type": { "const": "random_string" } } },
-              "then": {
-                "anyOf": [
-                  { "required": [ "_length" ] },
-                  { "required": [ "_regex" ] }
-                ]
-              }
+              "then": { "required": [ "_length" ] }
             },
             {
               "if": { "properties": { "_type": { "const": "random_int" } } },
