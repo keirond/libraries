@@ -12,3 +12,24 @@ Performance Testing for Kafka
 
 - `kafka-producer.yaml`
   - `bootstrap-servers`: the kafka broker endpoints (required) 
+
+---
+#### Testing Results
+
+- **Cluster Information**
+  - 3 KRaft Controllers (each, 500m -> 1 CPU, and 1Gi -> 2Gi RAM)
+  - 3 Brokers (each, 100Gi, 1 -> 2 CPU, and 2Gi -> 4Gi RAM)
+  - protocol: PLAINTEXT
+  - metric exporters: jxm-exporter, kafka-exporter.
+
+
+- **Scenario 1: acks=all, compression=none, small message (4 fields, ~100 bytes/message)**
+  ```json
+  {
+    "id": { "_type": "uuid" },
+    "name": { "_type": "constant", "_value": "name1" },
+    "description": { "_type": "random_string", "_length": 40, "_regex": "ab.*xyz" },
+    "value": { "_type": "random_int", "_min": 0, "_max": 100 },
+    "timestamp": { "_type": "now", "_format": "epoch_millis" }
+  }
+  ```
