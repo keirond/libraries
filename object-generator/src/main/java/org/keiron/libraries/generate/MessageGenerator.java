@@ -1,4 +1,4 @@
-package org.keiron.libraries.kafka.performance.testing.generator;
+package org.keiron.libraries.generate;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -25,9 +25,9 @@ public class MessageGenerator implements FieldGenerator<Map<String, Object>> {
       switch (type) {
         case "uuid" -> result.put(key, UUID.randomUUID().toString());
         case "random_string" -> {
-          var length = valueNode.get("_length").asOptional().ifPresent(JsonNode::asInt); // FIXME
-          result.put(key,
-            generateString(1, valueNode.get("_regex").asText()));
+          int length = valueNode.get("_length").asOptional().map(JsonNode::asInt).orElse(1);
+          String regex = valueNode.get("_regex").asOptional().map(JsonNode::asText).orElse(null);
+          result.put(key, generateString(length, regex));
         }
       }
     });

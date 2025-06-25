@@ -1,6 +1,7 @@
 package org.keiron.libraries.kafka.performance.testing.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.keiron.libraries.generate.FieldContext;
 import org.keiron.libraries.kafka.performance.testing.utils.ObjectMapper;
 
 import java.io.IOException;
@@ -25,11 +26,16 @@ public class ConfigContext {
       "monitor.yaml");
   public static MonitorConfig monitorConfig;
 
+  private static final String MESSAGE_SCHEMA_PATH = ConfigEnv.getEnvConfig("MONITOR_CONFIG_PATH",
+      "object/message.json");
+
   static {
     producerConfig = load(PRODUCER_CONFIG_PATH, ProducerConfig.class);
     consumerConfig = load(CONSUMER_CONFIG_PATH, ConsumerConfig.class);
     testPlanConfig = load(TEST_PLAN_CONFIG_PATH, TestPlanConfig.class);
     monitorConfig = load(MONITOR_CONFIG_PATH, MonitorConfig.class);
+
+    FieldContext.load(MESSAGE_SCHEMA_PATH);
   }
 
   private static <T> T load(String resourcePath, Class<T> clazz) {

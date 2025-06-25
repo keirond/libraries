@@ -10,32 +10,14 @@
     </parent>
 
     <groupId>org.keiron.libraries</groupId>
-    <artifactId>kafka-producer-performance-testing</artifactId>
+    <artifactId>object-generator</artifactId>
     <version>${revision}</version>
 
     <properties>
-        <kafka.version>4.0.0</kafka.version>
         <jackson.version>2.19.1</jackson.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.keiron.libraries</groupId>
-            <artifactId>object-generator</artifactId>
-            <version>${revision}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
-            <version>${kafka.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>connect-api</artifactId>
-            <version>${kafka.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -73,12 +55,8 @@
             <artifactId>logback-classic</artifactId>
             <version>1.5.18</version>
         </dependency>
-
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-prometheus</artifactId>
-            <version>1.15.1</version>
-        </dependency>
     </dependencies>
+
+    <build/>
 
 </project>
