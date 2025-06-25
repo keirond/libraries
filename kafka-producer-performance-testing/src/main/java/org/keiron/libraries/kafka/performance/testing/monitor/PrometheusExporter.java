@@ -30,7 +30,7 @@ public class PrometheusExporter {
       httpExchange.sendResponseHeaders(200, bytes.length);
       try (OutputStream os = httpExchange.getResponseBody()) {
         os.write(bytes);
-        os.flush(); // Important
+        os.flush();
       }
     });
     server.setExecutor(Executors.newSingleThreadExecutor());
