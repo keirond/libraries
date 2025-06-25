@@ -1,6 +1,5 @@
 package org.keiron.libraries.kafka.performance.testing;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micrometer.core.instrument.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +32,8 @@ class TestRunner {
 
   public static void run() {
     int vus = config.getVus();
-    for (int i = 0; i < vus; i++) {
+    int noOfProducers = Math.min(Math.max(1, vus / 2000), 100);
+    for (int i = 0; i < noOfProducers; i++) {
       stringProducers.add(new StringProducer());
     }
 
@@ -43,14 +43,12 @@ class TestRunner {
 
     var start = Instant.now();
     try (ExecutorService executor = Executors.newFixedThreadPool(vus)) {
-
       IntStream.range(0, vus).parallel().forEach(index -> {
         try {
           executor.submit(() -> {
             while (Duration.between(start, Instant.now()).compareTo(duration) < 0 &&
                        (iterations == -1 || atomicIterations.getAndDecrement() > 0)) {
-              StringProducer producer = stringProducers.get(index);
-              runTask(producer);
+              runTask(index % noOfProducers);
               LockSupport.parkNanos(1_000);
             }
           });
@@ -62,16 +60,14 @@ class TestRunner {
     log.info("Run complete in {}", Duration.between(start, Instant.now()).toString());
   }
 
-  private static void runTask(StringProducer stringProducer) {
+  private static void runTask(int index) {
+    StringProducer producer = stringProducers.get(index);
     var startTime = Instant.now();
     boolean status = true;
     try {
-      String topic = config.getProducer().getTopic();
+      var topic = config.getProducer().getTopic();
       var message = objectGenerator.generate();
-      stringProducer.send(topic, OBJECT_MAPPER.writeValueAsString(message));
-    } catch (JsonProcessingException e) {
-      status = false;
-      log.warn("Error parsing {}", e.getMessage());
+      producer.send(topic, OBJECT_MAPPER.writeValueAsString(message));
     } catch (Exception e) {
       status = false;
       log.warn("Error processing '{}'", e.getMessage());
