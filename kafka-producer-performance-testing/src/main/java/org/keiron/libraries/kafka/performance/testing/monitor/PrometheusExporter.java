@@ -25,8 +25,8 @@ public class PrometheusExporter {
       }
     });
     server.setExecutor(Executors.newSingleThreadExecutor());
-    server.start();
     log.info("Started Prometheus Exporter on port {}", port);
+    server.start();
   }
 
 }
