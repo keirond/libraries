@@ -4,10 +4,7 @@
   "title": "Field Generator",
   "type": "object",
   "properties": {
-    "metadata": {
-      "type": "object",
-      "additionalProperties": true
-    },
+    "metadata": { "type": "object", "additionalProperties": true },
     "fields": {
       "type": "object",
       "patternProperties": {
@@ -20,55 +17,28 @@
             "_type": {
               "type": "string",
               "enum": [
-                "uuid",
-                "now",
-                "constant",
-                "incremental",
-                "random_string",
-                "random_int",
-                "random_float",
-                "random_pick",
+                "uuid", "now", "constant", "incremental",
+                "random_string", "random_int",
+                "random_float", "random_pick",
                 "custom_expression"
               ]
             },
             "_format": {
               "description": "Used for 'now'",
-              "enum": [
-                "ISO8601",
-                "epoch",
-                "epoch_millis"
-              ]
+              "enum": [ "ISO8601", "epoch", "epoch_millis" ]
             },
             "_value": {
               "description": "Used for 'constant'",
-              "type": [
-                "string",
-                "number",
-                "boolean",
-                "null"
-              ]
+              "type": [ "string", "number", "boolean", "null" ]
             },
-            "_start": {
-              "description": "Used for 'incremental'",
-              "type": "integer"
-            },
+            "_start": { "description": "Used for 'incremental'", "type": "integer" },
             "_length": {
               "description": "Used for 'random_string'",
-              "type": "integer",
-              "minimum": 1
+              "type": "integer", "minimum": 1
             },
-            "_regex": {
-              "description": "Used for 'random_string'",
-              "type": "string"
-            },
-            "_min": {
-              "description": "Used for 'random_int', 'random_float'",
-              "type": "number"
-            },
-            "_max": {
-              "description": "Used for 'random_int', 'random_float'",
-              "type": "number"
-            },
+            "_regex": { "description": "Used for 'random_string'", "type": "string" },
+            "_min": { "description": "Used for 'random_int', 'random_float'", "type": "number" },
+            "_max": { "description": "Used for 'random_int', 'random_float'", "type": "number" },
             "_precision": {
               "description": "Used for 'random_float'",
               "type": "integer",
@@ -77,38 +47,56 @@
             "_values": {
               "description": "Used for 'random_pick'",
               "type": "array",
-              "items": {
-                "type": [
-                  "string",
-                  "number",
-                  "boolean",
-                  "null"
+              "items": { "type": [ "string", "number", "boolean", "null" ] }
+            },
+            "_expression": { "description": "Used for 'custom_expression'", "type": "string" }
+          },
+          "allOf": [
+            {
+              "if": { "properties": { "_type": { "const": "now" } } },
+              "then": { "required": [ "_format" ] }
+            },
+            {
+              "if": { "properties": { "_type": { "const": "constant" } } },
+              "then": { "required": [ "_value" ] }
+            },
+            {
+              "if": { "properties": { "_type": { "const": "incremental" } } },
+              "then": { "required": [ "_start" ] }
+            },
+            {
+              "if": { "properties": { "_type": { "const": "random_string" } } },
+              "then": {
+                "anyOf": [
+                  { "required": [ "_length" ] },
+                  { "required": [ "_regex" ] }
                 ]
               }
             },
-            "_expression": {
-              "description": "Used for 'custom_expression'",
-              "type": "string"
+            {
+              "if": { "properties": { "_type": { "const": "random_int" } } },
+              "then": { "required": [ "_min", "_max" ] }
+            },
+            {
+              "if": { "properties": { "_type": { "const": "random_float" } } },
+              "then": { "required": [ "_min", "_max", "_precision" ] }
+            },
+            {
+              "if": { "properties": { "_type": { "const": "random_pick" } } },
+              "then": { "required": [ "_values" ] }
+            },
+            {
+              "if": { "properties": { "_type": { "const": "custom_expression" } } },
+              "then": { "required": [ "_expression" ] }
             }
-          },
+          ],
           "additionalProperties": true
         }
       }
     },
-    "output": {
-      "type": "string",
-      "enum": [
-        "json",
-        "template"
-      ]
-    },
-    "template": {
-      "description": "Used for 'template output'",
-      "type": "string"
-    }
+    "output": { "type": "string", "enum": [ "json", "template" ] },
+    "template": { "description": "Used for 'template output'", "type": "string" }
   },
-  "required": [
-    "fields"
-  ],
+  "required": [ "fields" ],
   "additionalProperties": true
 }
