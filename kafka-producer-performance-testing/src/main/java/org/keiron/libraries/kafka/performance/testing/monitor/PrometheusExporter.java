@@ -1,6 +1,7 @@
 package org.keiron.libraries.kafka.performance.testing.monitor;
 
 import com.sun.net.httpserver.HttpServer;
+import org.keiron.libraries.kafka.performance.testing.config.ConfigEnv;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -11,7 +12,8 @@ public class PrometheusExporter {
 
   public static void run() throws IOException {
     var registry = PrometheusMonitor.getRegistry();
-    HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
+    int port = ConfigEnv.getEnvConfig("PORT", 8080);
+    HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
     server.createContext("/metrics", httpExchange -> {
       String response = registry.scrape();
       byte[] bytes = response.getBytes();

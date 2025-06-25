@@ -6,6 +6,7 @@ import io.micrometer.core.instrument.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.keiron.libraries.kafka.performance.testing.config.ConfigContext;
 import org.keiron.libraries.kafka.performance.testing.config.TestPlanConfig;
+import org.keiron.libraries.kafka.performance.testing.generator.MessageGenerator;
 import org.keiron.libraries.kafka.performance.testing.monitor.PrometheusMonitor;
 import org.keiron.libraries.kafka.performance.testing.producer.StringProducer;
 
@@ -29,6 +30,7 @@ class TestRunner {
   private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
   private static final TestPlanConfig config = ConfigContext.testPlanConfig;
   private static final List<StringProducer> stringProducers = new ArrayList<>();
+  private static final MessageGenerator messageGenerator = new MessageGenerator();
 
   public static void run() {
     int vus = config.getVus();
@@ -66,8 +68,9 @@ class TestRunner {
     boolean status = true;
     try {
       String topic = config.getProducer().getTopic();
-      var message = new TestMessage().setId(UUID.randomUUID().toString());
-      stringProducer.send(topic, OBJECT_MAPPER.writeValueAsString(message));
+      var message = messageGenerator.generate();
+      log.info(String.format("Producing '%s' to '%s'", topic, OBJECT_MAPPER.writeValueAsString(message)));
+//      stringProducer.send(topic, OBJECT_MAPPER.writeValueAsString(message));
     } catch (JsonProcessingException e) {
       status = false;
       log.warn("Error parsing {}", e.getMessage());

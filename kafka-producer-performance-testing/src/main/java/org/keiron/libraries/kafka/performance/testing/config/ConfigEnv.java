@@ -1,10 +1,15 @@
 package org.keiron.libraries.kafka.performance.testing.config;
 
-class ConfigEnv {
+public class ConfigEnv {
 
   public static String getEnvConfig(String envKey, String defaultValue) {
-    var path = System.getenv(envKey);
-    return path != null ? path : defaultValue;
+    var envValue = System.getenv(envKey);
+    return envValue != null ? envValue : defaultValue;
+  }
+
+  public static int getEnvConfig(String envKey, int defaultValue) {
+    var envValue = System.getenv(envKey);
+    return envValue != null ? Integer.parseInt(envValue) : defaultValue;
   }
 
 }
