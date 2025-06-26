@@ -27,10 +27,14 @@ Performance Testing for Kafka
   - config
     ```yaml
       partitions: 1
-      replication.factor: 1 (not recommended, I just do this basic case for data)
+      replication.factor: 1 (not recommended, I just wanna do this basic case for chart data)
       min.insync.replicas: 2 (not effect if replication.factor = 1)
       acks: all (should be all if working on critical system)
       compression.type: none
+      
+      virtual.users: 1 (no of producers = vus / 2000, min = 1, max = 100)
+      durations: 1h (but I stopped it by manual)
+      iterations: -1 (not limit)
     ```
   - small message (4 fields, ~100 bytes/message)
     ```json
@@ -44,3 +48,21 @@ Performance Testing for Kafka
     ```
   - result
   ![img.png](docs/tc1.png)
+
+### Scenario 2
+- config
+  ```yaml
+    partitions: 1
+    replication.factor: 3 (full replication as brokers.no = replication.factor)
+    min.insync.replicas: 2  (recommended, set it 3 if requiring more durability but slower)
+    acks: all (should be all if working on critical system)
+    compression.type: none
+  
+    virtual.users: 1 (no of producers = vus / 2000, min = 1, max = 100)
+    durations: 15m
+    iterations: -1 (not limit)
+  ```
+- small message (4 fields, ~100 bytes/message)
+
+- result
+  ![img.png]
