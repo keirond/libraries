@@ -46,7 +46,7 @@ Performance Testing for Kafka
       "timestamp": { "_type": "now", "_format": "epoch_millis" }
     }
     ```
-  - result
+  - result (12k5 rps, 18.5 microseconds)
   ![img.png](docs/tc1.png)
 
 ### Scenario 2
@@ -64,5 +64,5 @@ Performance Testing for Kafka
   ```
 - small message (4 fields, ~100 bytes/message)
 
-- result
-  ![img.png]
+- result (12k5 rps, 19 microseconds, more high latency than scenario 1 as waiting acks=all by as least min.isr=2 up to 3)
+  ![img.png](docs/tc2.png)
