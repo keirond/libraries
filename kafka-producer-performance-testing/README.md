@@ -23,7 +23,7 @@ Performance Testing for Kafka
   - metric exporters: jxm-exporter, kafka-exporter.
 
 
-### Scenario 1
+### Scenario 1: Base
   - config
     ```yaml
       partitions: 1
@@ -49,7 +49,7 @@ Performance Testing for Kafka
   - result (12k5 rps, 18.5 microseconds)
   ![img.png](docs/tc1.png)
 
-### Scenario 2
+### Scenario 2: Add acknowledgment constraints from Scenario 1
 - config
   ```yaml
     partitions: 1
@@ -59,6 +59,26 @@ Performance Testing for Kafka
     compression.type: none
   
     virtual.users: 1 (no of producers = vus / 2000, min = 1, max = 100)
+    -> producers: 1
+    durations: 15m
+    iterations: -1 (not limit)
+  ```
+- small message (4 fields, ~100 bytes/message)
+
+- result (12k5 rps, 19 microseconds, more high latency than scenario 1 as waiting acks=all by as least min.isr=2 up to 3)
+  ![img.png](docs/tc2.png)
+
+### Scenario 3: Up VUs to 10 from Scenario 2
+- config
+  ```yaml
+    partitions: 1
+    replication.factor: 3 (full replication as brokers.no = replication.factor)
+    min.insync.replicas: 2  (recommended, set it 3 if requiring more durability but slower)
+    acks: all (should be all if working on critical system)
+    compression.type: none
+  
+    virtual.users: 10 (no of producers = vus / 2000, min = 1, max = 100)
+    -> producers: 1
     durations: 15m
     iterations: -1 (not limit)
   ```
