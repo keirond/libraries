@@ -23,13 +23,22 @@ Performance Testing for Kafka
   - metric exporters: jxm-exporter, kafka-exporter.
 
 
-- **Scenario 1: acks=all, compression=none, small message (4 fields, ~100 bytes/message)**
-  ```json
-  {
-    "id": { "_type": "uuid" },
-    "name": { "_type": "constant", "_value": "name1" },
-    "description": { "_type": "random_string", "_length": 40, "_regex": "ab.*xyz" },
-    "value": { "_type": "random_int", "_min": 0, "_max": 100 },
-    "timestamp": { "_type": "now", "_format": "epoch_millis" }
-  }
-  ```
+- **Scenario 1**
+  - config
+    ```yaml
+      partitions: 1
+      replication.factor: 1
+      min.insync.replicas: 2 (not effect if replication.factor = 1)
+      acks: all
+      compression.type: none
+    ```
+  - small message (4 fields, ~100 bytes/message)
+    ```json
+    {
+      "id": { "_type": "uuid" },
+      "name": { "_type": "constant", "_value": "name" },
+      "description": { "_type": "random_string", "_length": 40 },
+      "value": { "_type": "random_int", "_min": 0, "_max": 100 },
+      "timestamp": { "_type": "now", "_format": "epoch_millis" }
+    }
+    ```
