@@ -111,4 +111,30 @@ Performance Testing for Kafka (produce messages)
   ```
 - small message as Scenario 1 (4 fields, ~100 bytes/message)
 
-- result (x rps, x microseconds)
+- result (36k rps, 2.7 milliseconds)
+  - throughput doesn't increase too much but latency does compare to Scenario 3.
+
+  ![img.png](docs/tc4.png)
+
+### Scenario 5: Up partitions to 3 from Scenario 2
+
+- config
+  ```yaml
+    partitions: 3 (meaning all requests to all 3 brokers that holds its own leader partitions 
+                      by round robin partition assignment)
+    replication.factor: 3 (full replication as brokers.no = replication.factor)
+    min.insync.replicas: 2  (recommended, set it 3 if requiring more durability but slower)
+    acks: all (should be all if working on critical system)
+    compression.type: none
+  
+    virtual.users: 100 (no of producers = vus / 2000, min = 1, max = 100)
+    -> producers: 1 (with higher vus, the buffer memory on this producer is more useful)
+    durations: 15m
+    iterations: -1 (not limit)
+  ```
+- small message as Scenario 1 (4 fields, ~100 bytes/message)
+
+- result (36k rps, 2.7 milliseconds)
+  - same as Scenario 3 as only one producer so it's only one stream connection established
+
+  ![img.png](docs/tc5.png)
