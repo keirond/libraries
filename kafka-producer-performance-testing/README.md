@@ -164,4 +164,4 @@ Performance Testing for Kafka (produce messages)
   ![img.png](docs/tc6.png)
 
 - 3 producers, 30 partitions (not much change)
-  ![img.png](docs/tc6.1.png)
+  ![img.png](docs/tc6-1.png)
