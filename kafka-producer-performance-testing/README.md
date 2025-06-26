@@ -42,11 +42,11 @@ Performance Testing for Kafka
 - small message (4 fields, ~100 bytes/message)
   ```json
     {
-    "id": { "_type": "uuid" },
-    "name": { "_type": "constant", "_value": "name" },
-    "description": { "_type": "random_string", "_length": 40 },
-    "value": { "_type": "random_int", "_min": 0, "_max": 100 },
-    "timestamp": { "_type": "now", "_format": "epoch_millis" }
+      "id": { "_type": "uuid" },
+      "name": { "_type": "constant", "_value": "name" },
+      "description": { "_type": "random_string", "_length": 40 },
+      "value": { "_type": "random_int", "_min": 0, "_max": 100 },
+      "timestamp": { "_type": "now", "_format": "epoch_millis" }
     }
   ```
 - result (12k5 rps, 18.5 microseconds)
