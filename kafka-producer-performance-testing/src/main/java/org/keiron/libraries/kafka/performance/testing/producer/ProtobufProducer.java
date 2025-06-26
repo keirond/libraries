@@ -1,32 +1,26 @@
 package org.keiron.libraries.kafka.performance.testing.producer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.protobuf.Message;
-import io.confluent.kafka.serializers.protobuf.KafkaProtobufSerializer;
+import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.keiron.libraries.generate.ObjectGenerator;
 import org.keiron.libraries.kafka.performance.testing.config.ConfigContext;
 import org.keiron.libraries.kafka.performance.testing.config.SchemaRegistryConfig;
 
 import java.util.HashMap;
 
 @Slf4j
-public class ProtobufProducer<T extends Message> implements Producer<Object> {
-
-  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-  private static final ObjectGenerator objectGenerator = new ObjectGenerator();
+public class ProtobufProducer implements Producer<Object> {
 
   private static final SchemaRegistryConfig schemaRegistryConfig = ConfigContext.schemaRegistryConfig;
 
-  private final org.apache.kafka.clients.producer.Producer<String, T> producer;
+  private final org.apache.kafka.clients.producer.Producer<String, Object> producer;
 
-  public <T extends Message> ProtobufProducer() {
+  public ProtobufProducer() {
     var extendConfigs = new HashMap<String, Object>();
     extendConfigs.put("schema.registry.url", schemaRegistryConfig.getUrl());
     producer = ProducerFactory.createProducer(extendConfigs, new StringSerializer(),
-        new KafkaProtobufSerializer<T>()); // TODO
+        new KafkaAvroSerializer()); // TODO replace it to KafkaProtobufSerializer
   }
 
   @Override
@@ -50,14 +44,6 @@ public class ProtobufProducer<T extends Message> implements Producer<Object> {
   @Override
   public boolean runTest(String topic) {
     return false;
-    //    try {
-    //      var message = objectGenerator.generate();
-    //      send(topic, OBJECT_MAPPER.writeValueAsString(message));
-    //      return true;
-    //    } catch (Exception e) {
-    //      log.warn("Error processing '{}'", e.getMessage());
-    //      return false;
-    //    }
   }
 
   @Override

@@ -1,5 +1,6 @@
 package org.keiron.libraries.kafka.performance.testing.producer;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import lombok.extern.slf4j.Slf4j;
@@ -9,12 +10,16 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.keiron.libraries.generate.ObjectGenerator;
 import org.keiron.libraries.kafka.performance.testing.config.ConfigContext;
+import org.keiron.libraries.kafka.performance.testing.config.ConfigEnv;
 import org.keiron.libraries.kafka.performance.testing.config.SchemaRegistryConfig;
 
 import java.util.HashMap;
 
 @Slf4j
 public class AvroProducer implements Producer<Object> {
+
+  private static final String AVRO_MESSAGE_SCHEMA_PATH = ConfigEnv.getEnvConfig(
+      "AVRO_MESSAGE_SCHEMA_PATH", "object/message.avsc");
 
   private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
   private static final ObjectGenerator objectGenerator = new ObjectGenerator();
@@ -51,13 +56,18 @@ public class AvroProducer implements Producer<Object> {
   @Override
   public boolean runTest(String topic) {
     try {
-      // TODO
-      String userSchema = "{\"type\":\"record\"," + "\"name\":\"myrecord\"," +
-                              "\"fields\":[{\"name\":\"f1\",\"type\":\"string\"}]}";
       var parser = new Schema.Parser();
-      Schema schema = parser.parse(userSchema);
+      JsonNode node = ConfigContext.load(AVRO_MESSAGE_SCHEMA_PATH, JsonNode.class);
+      Schema schema = parser.parse(OBJECT_MAPPER.writeValueAsString(node));
+
       var avroRecord = new GenericData.Record(schema);
-      avroRecord.put("f1", "value1");
+      JsonNode fields = node.path("fields");
+      fields.elements().forEachRemaining(field -> {
+        var name = field.path("name").asText();
+        var type = field.path("_type").asText();
+        avroRecord.put(name, objectGenerator.generateField(type, field));
+      });
+
       send(topic, avroRecord);
       return true;
     } catch (Exception e) {

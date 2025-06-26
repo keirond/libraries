@@ -38,7 +38,7 @@ public class ConfigContext {
     SchemaContext.load(MESSAGE_SCHEMA_PATH);
   }
 
-  private static <T> T load(String resourcePath, Class<T> clazz) {
+  public static <T> T load(String resourcePath, Class<T> clazz) {
     try (InputStream is = ConfigContext.class.getClassLoader().getResourceAsStream(resourcePath)) {
       if (is == null) {
         throw new IllegalArgumentException(String.format("Resource '%s' not found", resourcePath));
