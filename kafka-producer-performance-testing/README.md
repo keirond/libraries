@@ -187,4 +187,25 @@ Performance Testing for Kafka (produce messages)
   ```
 - small message as Scenario 1 (4 fields, ~100 bytes/message)
 
+- result (37k rps, 2.7 milliseconds)
+  ![img.png](docs/tc7.png)
+
+### Scenarios 8: Use avro schema instead of json string from Scenario 5
+
+- config
+  ```yaml
+    partitions: 3 (meaning all requests to all 3 brokers that holds its own leader partitions 
+                      by round robin partition assignment)
+    replication.factor: 3 (full replication as brokers.no = replication.factor)
+    min.insync.replicas: 2  (recommended, set it 3 if requiring more durability but slower)
+    acks: all (should be all if working on critical system)
+    compression.type: none
+  
+    virtual.users: 100
+    -> producers: 3
+    durations: 15m
+    iterations: -1 (not limit)
+  ```
+- small message as Scenario 1 (4 fields, ~100 bytes/message)
+
 - result (x rps, x milliseconds)

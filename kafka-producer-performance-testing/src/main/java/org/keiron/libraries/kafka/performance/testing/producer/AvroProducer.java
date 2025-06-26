@@ -26,6 +26,8 @@ public class AvroProducer implements Producer<Object> {
   private static final ObjectGenerator objectGenerator = new ObjectGenerator();
 
   private static final SchemaRegistryConfig schemaRegistryConfig = ConfigContext.schemaRegistryConfig;
+  private final Schema schema;
+
   private final org.apache.kafka.clients.producer.Producer<String, Object> producer;
 
   public AvroProducer() {
@@ -35,6 +37,16 @@ public class AvroProducer implements Producer<Object> {
         "io.confluent.kafka.serializers.subject.TopicRecordNameStrategy");
     var valueSerializers = new KafkaAvroSerializer();
     valueSerializers.configure(extendConfigs, false);
+
+    var parser = new Schema.Parser();
+    var node = ConfigContext.load(AVRO_MESSAGE_SCHEMA_PATH, JsonNode.class);
+
+    var nodeStr = "";
+    try {
+      nodeStr = OBJECT_MAPPER.writeValueAsString(node);
+    } catch (Exception ignored) {
+    }
+    schema = parser.parse(nodeStr);
     producer = ProducerFactory.createProducer(Map.of(), new StringSerializer(), valueSerializers);
   }
 
@@ -59,10 +71,6 @@ public class AvroProducer implements Producer<Object> {
   @Override
   public boolean runTest(String topic) {
     try {
-      var parser = new Schema.Parser();
-      var node = ConfigContext.load(AVRO_MESSAGE_SCHEMA_PATH, JsonNode.class);
-      Schema schema = parser.parse(OBJECT_MAPPER.writeValueAsString(node));
-
       var avroRecord = new GenericData.Record(schema);
       var data = objectGenerator.generate();
       for (var field : schema.getFields()) {
