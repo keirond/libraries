@@ -49,7 +49,7 @@ Performance Testing for Kafka (produce messages)
       "timestamp": { "_type": "now", "_format": "epoch_millis" }
     }
   ```
-- result (12k5 rps, 18.5 microseconds)
+- result (12.5k rps, 18.5 microseconds)
   ![img.png](docs/tc1.png)
 
 ### Scenario 2: Add acknowledgment constraints from Scenario 1
@@ -69,9 +69,9 @@ Performance Testing for Kafka (produce messages)
   ```
 - small message as Scenario 1 (4 fields, ~100 bytes/message)
 
-- result (12k5 rps, 19 microseconds)
+- result (12.5k rps, 19 microseconds)
   - higher latency than scenario 1 as waiting acks=all by as least min.isr=2 up to 3)
-  
+
   ![img.png](docs/tc2.png)
 
 ### Scenario 3: Up VUs to 10 from Scenario 2
@@ -135,6 +135,33 @@ Performance Testing for Kafka (produce messages)
 - small message as Scenario 1 (4 fields, ~100 bytes/message)
 
 - result (36k rps, 2.7 milliseconds)
-  - same as Scenario 3 as only one producer so it's only one stream connection established
+  - same as Scenario 3 but why,
+    - is it because one producer is only stream connection established for sending messages?
 
   ![img.png](docs/tc5.png)
+
+### Scenario 6: Up producers to 3 from Scenario 2
+
+- config
+  ```yaml
+    partitions: 3 (meaning all requests to all 3 brokers that holds its own leader partitions 
+                      by round robin partition assignment)
+    replication.factor: 3 (full replication as brokers.no = replication.factor)
+    min.insync.replicas: 2  (recommended, set it 3 if requiring more durability but slower)
+    acks: all (should be all if working on critical system)
+    compression.type: none
+  
+    virtual.users: 100
+    -> producers: 3
+    durations: 15m
+    iterations: -1 (not limit)
+  ```
+- small message as Scenario 1 (4 fields, ~100 bytes/message)
+
+- result (32.5k rps, 3 milliseconds)
+  - it's slower than 1 producer as it need more CPU, GC, resources to manage.
+
+  ![img.png](docs/tc6.png)
+
+- 3 producers, 30 partitions (not much change)
+  ![img.png](docs/tc6.1.png)
