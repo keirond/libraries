@@ -14,7 +14,7 @@ fetch-max-wait-ms: 500
 # group-instance-id
 # partition-assignment-strategy
 
-# int, default = 500
+# int, default = 500, on only one partition
 max-poll-records: 500
 # int (ms), default = 300000 (5 minutes)
 max-poll-interval-ms: 300000
@@ -36,7 +36,7 @@ retry-backoff-ms: 100
 # used as a constant backoff without any exponential increase
 retry-backoff-max-ms: 1000
 
-# boolean, default = true
+# boolean, default = true, broker config has to enabled
 allow-auto-create-topics: true
 # string [latest, earliest, none, by_duration:PnDTnHnMn.nS], default = latest
 auto-offset-reset: latest
