@@ -32,6 +32,7 @@ public class TestPlanConfig {
   @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
   public static class Producer {
 
+    private int noOfProducers;
     private String producerType;
     private String topic;
 
