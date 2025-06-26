@@ -33,7 +33,7 @@ class TestRunner {
     int vus = config.getVus();
     int noOfProducersConf = config.getProducer().getNoOfProducers();
     int noOfProducers =
-        noOfProducersConf != 0 ? noOfProducersConf : Math.min(Math.max(1, vus / 2000), 100);
+        noOfProducersConf > 0 ? noOfProducersConf : Math.min(Math.max(1, vus / 2000), 100);
     for (int i = 0; i < noOfProducers; i++) {
       producers.add(switch (config.getProducer().getProducerType()) {
         case "avro" -> new AvroProducer();
