@@ -31,6 +31,8 @@ public class AvroProducer implements Producer<Object> {
   public AvroProducer() {
     var extendConfigs = new HashMap<String, Object>();
     extendConfigs.put("schema.registry.url", schemaRegistryConfig.getUrl());
+    extendConfigs.put("value.subject.name.strategy",
+        "io.confluent.kafka.serializers.subject.TopicRecordNameStrategy");
     var valueSerializers = new KafkaAvroSerializer();
     valueSerializers.configure(extendConfigs, false);
     producer = ProducerFactory.createProducer(Map.of(), new StringSerializer(), valueSerializers);

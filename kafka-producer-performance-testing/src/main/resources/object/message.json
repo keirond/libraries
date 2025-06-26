@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/keirond/libraries/refs/heads/main/json-schema/object-generator.schema.json",
   "fields": {
     "id": { "_type": "uuid" },
-    "name": { "_type": "constant", "_value": "name1" },
+    "name": { "_type": "constant", "_value": "name" },
     "description": { "_type": "random_string", "_length": 40 },
     "value": { "_type": "random_int", "_min": 0, "_max": 100 },
     "timestamp": { "_type": "now", "_format": "epoch_millis" }

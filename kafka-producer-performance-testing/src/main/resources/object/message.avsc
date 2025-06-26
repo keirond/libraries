@@ -2,6 +2,10 @@
   "type": "record",
   "name": "message",
   "fields": [
-    { "name": "id", "type": "string" }
+    { "name": "id", "type": "string" },
+    { "name": "name", "type": "string" },
+    { "name": "description", "type": "string" },
+    { "name": "value", "type": "int" },
+    { "name": "timestamp", "type": "long" }
   ]
 }
