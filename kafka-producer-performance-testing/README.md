@@ -1,4 +1,4 @@
-Performance Testing for Kafka
+Performance Testing for Kafka (produce messages)
 
 ---
 
@@ -7,7 +7,7 @@ Performance Testing for Kafka
 - `plans/test-plan.yaml`
   - `vus`: number of virtual users, default = 0
   - `duration`: the time this script will be run, default = 0s
-  - `iterations`: the total number of messages will be handled, default = -1 meaning not limit.
+  - `iterations`: the total number of messages will be handled, default = -1 meaning not limit number of requests.
   - `producer.topic`: the topic name that message will be sent to. (required)
 
 
@@ -70,8 +70,9 @@ Performance Testing for Kafka
 - small message as Scenario 1 (4 fields, ~100 bytes/message)
 
 - result (12k5 rps, 19 microseconds)
-  - more high latency than scenario 1 as waiting acks=all by as least min.isr=2 up to 3)
-    ![img.png](docs/tc2.png)
+  - higher latency than scenario 1 as waiting acks=all by as least min.isr=2 up to 3)
+  
+  ![img.png](docs/tc2.png)
 
 ### Scenario 3: Up VUs to 10 from Scenario 2
 
@@ -90,4 +91,24 @@ Performance Testing for Kafka
   ```
 - small message as Scenario 1 (4 fields, ~100 bytes/message)
 
-- result
+- result (35k rps, 220 microseconds)
+  ![img.png](docs/tc3.png)
+
+### Scenario 4: Up VUs to 100 from Scenario 2
+
+- config
+  ```yaml
+    partitions: 1 (meaning all requests to one broker that holds this leader partition)
+    replication.factor: 3 (full replication as brokers.no = replication.factor)
+    min.insync.replicas: 2  (recommended, set it 3 if requiring more durability but slower)
+    acks: all (should be all if working on critical system)
+    compression.type: none
+  
+    virtual.users: 100 (no of producers = vus / 2000, min = 1, max = 100)
+    -> producers: 1 (with higher vus, the buffer memory on this producer is more useful)
+    durations: 15m
+    iterations: -1 (not limit)
+  ```
+- small message as Scenario 1 (4 fields, ~100 bytes/message)
+
+- result (x rps, x microseconds)
