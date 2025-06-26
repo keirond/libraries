@@ -2,8 +2,8 @@ package org.keiron.libraries.cassandra.performance.testing.monitor;
 
 import io.micrometer.common.lang.Nullable;
 import io.micrometer.common.util.StringUtils;
-import org.keiron.libraries.kafka.performance.testing.config.ConfigContext;
-import org.keiron.libraries.kafka.performance.testing.config.MonitorConfig;
+import org.keiron.libraries.cassandra.performance.testing.config.ConfigContext;
+import org.keiron.libraries.cassandra.performance.testing.config.MonitorConfig;
 
 class PrometheusConfig implements io.micrometer.prometheusmetrics.PrometheusConfig {
 

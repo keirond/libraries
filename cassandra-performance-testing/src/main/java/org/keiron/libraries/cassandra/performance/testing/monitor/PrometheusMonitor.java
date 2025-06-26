@@ -4,7 +4,6 @@ import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.Tags;
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry;
 import lombok.Getter;
-import org.keiron.libraries.kafka.performance.testing.monitor.PrometheusConfig;
 
 import java.time.Duration;
 import java.time.Instant;

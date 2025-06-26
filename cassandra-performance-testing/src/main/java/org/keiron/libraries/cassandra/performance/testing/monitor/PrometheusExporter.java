@@ -2,7 +2,7 @@ package org.keiron.libraries.cassandra.performance.testing.monitor;
 
 import com.sun.net.httpserver.HttpServer;
 import lombok.extern.slf4j.Slf4j;
-import org.keiron.libraries.kafka.performance.testing.config.ConfigEnv;
+import org.keiron.libraries.cassandra.performance.testing.config.ConfigEnv;
 
 import java.io.IOException;
 import java.io.OutputStream;
