@@ -14,6 +14,7 @@ import org.keiron.libraries.kafka.performance.testing.config.ConfigEnv;
 import org.keiron.libraries.kafka.performance.testing.config.SchemaRegistryConfig;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 public class AvroProducer implements Producer<Object> {
@@ -25,14 +26,14 @@ public class AvroProducer implements Producer<Object> {
   private static final ObjectGenerator objectGenerator = new ObjectGenerator();
 
   private static final SchemaRegistryConfig schemaRegistryConfig = ConfigContext.schemaRegistryConfig;
-
   private final org.apache.kafka.clients.producer.Producer<String, Object> producer;
 
   public AvroProducer() {
     var extendConfigs = new HashMap<String, Object>();
     extendConfigs.put("schema.registry.url", schemaRegistryConfig.getUrl());
-    producer = ProducerFactory.createProducer(extendConfigs, new StringSerializer(),
-        new KafkaAvroSerializer());
+    var valueSerializers = new KafkaAvroSerializer();
+    valueSerializers.configure(extendConfigs, false);
+    producer = ProducerFactory.createProducer(Map.of(), new StringSerializer(), valueSerializers);
   }
 
   @Override
@@ -57,17 +58,14 @@ public class AvroProducer implements Producer<Object> {
   public boolean runTest(String topic) {
     try {
       var parser = new Schema.Parser();
-      JsonNode node = ConfigContext.load(AVRO_MESSAGE_SCHEMA_PATH, JsonNode.class);
+      var node = ConfigContext.load(AVRO_MESSAGE_SCHEMA_PATH, JsonNode.class);
       Schema schema = parser.parse(OBJECT_MAPPER.writeValueAsString(node));
 
       var avroRecord = new GenericData.Record(schema);
-      JsonNode fields = node.path("fields");
-      fields.elements().forEachRemaining(field -> {
-        var name = field.path("name").asText();
-        var type = field.path("_type").asText();
-        avroRecord.put(name, objectGenerator.generateField(type, field));
-      });
-
+      var data = objectGenerator.generate();
+      for (var field : schema.getFields()) {
+        avroRecord.put(field.name(), data.get(field.name()));
+      }
       send(topic, avroRecord);
       return true;
     } catch (Exception e) {

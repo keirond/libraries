@@ -37,7 +37,7 @@ public class ObjectGenerator implements Generator<Map<String, Object>> {
     return result;
   }
 
-  public Object generateField(String type, JsonNode node) {
+  private Object generateField(String type, JsonNode node) {
     return switch (type) {
       case "uuid" -> UUID.randomUUID().toString();
       case "now" ->

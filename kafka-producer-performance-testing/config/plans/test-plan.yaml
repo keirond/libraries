@@ -3,5 +3,5 @@ duration: 30s
 iterations: 1
 
 producer:
-  producer-type: string
+  producer-type: avro
   topic: spaceZ

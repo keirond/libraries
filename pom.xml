@@ -50,9 +50,8 @@
                 <includes>
                     <include>**/*.yml</include>
                     <include>**/*.yaml</include>
-                    <include>**/*.properties</include>
-                    <include>**/*.json</include>
                     <include>**/*.toml</include>
+                    <include>**/*.properties</include>
                 </includes>
             </resource>
             <resource>

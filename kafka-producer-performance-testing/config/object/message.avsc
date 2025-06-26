@@ -1,7 +1,0 @@
-{
-  "type": "record",
-  "name": "Message",
-  "fields": [
-    { "name": "id", "type": "string", "_type": "uuid" }
-  ]
-}
