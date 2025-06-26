@@ -94,7 +94,7 @@ Performance Testing for Kafka (produce messages)
 - result (35k rps, 220 microseconds)
   ![img.png](docs/tc3.png)
 
-### Scenario 4: Up VUs to 100 from Scenario 2
+### Scenario 4: Up VUs to 100 from Scenario 3
 
 - config
   ```yaml
@@ -116,7 +116,7 @@ Performance Testing for Kafka (produce messages)
 
   ![img.png](docs/tc4.png)
 
-### Scenario 5: Up partitions to 3 from Scenario 2
+### Scenario 5: Up partitions to 3 from Scenario 4
 
 - config
   ```yaml
@@ -140,7 +140,10 @@ Performance Testing for Kafka (produce messages)
 
   ![img.png](docs/tc5.png)
 
-### Scenario 6: Up producers to 3 from Scenario 2
+- 1 producer, 30 partitions (not much change)
+  ![img.png](docs/tc5-1.png)
+
+### Scenario 6: Up producers to 3 from Scenario 5
 
 - config
   ```yaml
@@ -165,3 +168,23 @@ Performance Testing for Kafka (produce messages)
 
 - 3 producers, 30 partitions (not much change)
   ![img.png](docs/tc6-1.png)
+
+### Scenario 7: Change to lz4 compression from Scenario 5
+
+- config
+  ```yaml
+    partitions: 3 (meaning all requests to all 3 brokers that holds its own leader partitions 
+                      by round robin partition assignment)
+    replication.factor: 3 (full replication as brokers.no = replication.factor)
+    min.insync.replicas: 2  (recommended, set it 3 if requiring more durability but slower)
+    acks: all (should be all if working on critical system)
+    compression.type: lz4
+  
+    virtual.users: 100
+    -> producers: 3
+    durations: 15m
+    iterations: -1 (not limit)
+  ```
+- small message as Scenario 1 (4 fields, ~100 bytes/message)
+
+- result (x rps, x milliseconds)
