@@ -208,4 +208,5 @@ Performance Testing for Kafka (produce messages)
   ```
 - small message as Scenario 1 (4 fields, ~100 bytes/message)
 
-- result (x rps, x milliseconds)
+- result (37k rps, 2.7 milliseconds)
+  ![img.png](docs/tc8.png)
