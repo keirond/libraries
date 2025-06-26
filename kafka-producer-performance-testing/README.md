@@ -14,22 +14,22 @@ Performance Testing for Kafka
   - `bootstrap-servers`: the kafka broker endpoints (required) 
 
 ---
-#### Testing Results
+## Testing Results
 
-- **Cluster Information**
+### Cluster Information
   - 3 KRaft Controllers (each, 500m -> 1 CPU, and 1Gi -> 2Gi RAM)
   - 3 Brokers (each, 100Gi, 1 -> 2 CPU, and 2Gi -> 4Gi RAM)
   - protocol: PLAINTEXT
   - metric exporters: jxm-exporter, kafka-exporter.
 
 
-- **Scenario 1**
+### Scenario 1
   - config
     ```yaml
       partitions: 1
-      replication.factor: 1
+      replication.factor: 1 (not recommended, I just do this basic case for data)
       min.insync.replicas: 2 (not effect if replication.factor = 1)
-      acks: all
+      acks: all (should be all if working on critical system)
       compression.type: none
     ```
   - small message (4 fields, ~100 bytes/message)
@@ -42,3 +42,5 @@ Performance Testing for Kafka
       "timestamp": { "_type": "now", "_format": "epoch_millis" }
     }
     ```
+  - result
+  ![img.png](docs/tc1.png)
