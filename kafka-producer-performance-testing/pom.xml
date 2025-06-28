@@ -21,12 +21,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.keiron.libraries</groupId>
-            <artifactId>object-generator</artifactId>
-            <version>${revision}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
             <version>${kafka.version}</version>

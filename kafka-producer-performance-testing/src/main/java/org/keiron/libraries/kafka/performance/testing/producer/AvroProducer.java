@@ -8,10 +8,9 @@ import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.keiron.libraries.generate.ObjectGenerator;
 import org.keiron.libraries.kafka.performance.testing.config.ConfigContext;
-import org.keiron.libraries.kafka.performance.testing.config.ConfigEnv;
 import org.keiron.libraries.kafka.performance.testing.config.SchemaRegistryConfig;
+import org.keiron.libraries.kafka.performance.testing.generate.ObjectGenerator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,8 +18,7 @@ import java.util.Map;
 @Slf4j
 public class AvroProducer implements Producer<Object> {
 
-  private static final String AVRO_MESSAGE_SCHEMA_PATH = ConfigEnv.getEnvConfig(
-      "AVRO_MESSAGE_SCHEMA_PATH", "object/message.avsc");
+  private static final String AVRO_MESSAGE_SCHEMA_PATH = "object/message.avsc";
 
   private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
   private static final ObjectGenerator objectGenerator = new ObjectGenerator();

@@ -1,4 +1,4 @@
-package org.keiron.libraries.generate;
+package org.keiron.libraries.kafka.performance.testing.generate;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;

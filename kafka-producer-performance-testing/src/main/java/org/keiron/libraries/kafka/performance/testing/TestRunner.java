@@ -3,7 +3,7 @@ package org.keiron.libraries.kafka.performance.testing;
 import io.micrometer.core.instrument.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.keiron.libraries.kafka.performance.testing.config.ConfigContext;
-import org.keiron.libraries.kafka.performance.testing.config.TestPlanConfig;
+import org.keiron.libraries.kafka.performance.testing.config.OptionsConfig;
 import org.keiron.libraries.kafka.performance.testing.monitor.PrometheusMonitor;
 import org.keiron.libraries.kafka.performance.testing.producer.AvroProducer;
 import org.keiron.libraries.kafka.performance.testing.producer.Producer;
@@ -26,7 +26,7 @@ import static org.keiron.libraries.kafka.performance.testing.monitor.PrometheusM
 @Slf4j
 class TestRunner {
 
-  private static final TestPlanConfig config = ConfigContext.testPlanConfig;
+  private static final OptionsConfig config = ConfigContext.optionsConfig;
   private static final List<Producer<?>> producers = new ArrayList<>();
 
   public static void run() {

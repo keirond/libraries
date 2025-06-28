@@ -5,17 +5,14 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
 import java.time.Duration;
-import java.util.List;
 
 @Data
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy.class)
-public class TestPlanConfig {
+public class OptionsConfig {
 
   private int vus;
   private Duration duration;
   private int iterations = -1;
-  private int rqs = -1;
-  private List<Stage> stages;
 
   private Producer producer;
 

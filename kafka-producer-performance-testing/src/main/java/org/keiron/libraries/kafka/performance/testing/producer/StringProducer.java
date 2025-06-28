@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.keiron.libraries.generate.ObjectGenerator;
+import org.keiron.libraries.kafka.performance.testing.generate.ObjectGenerator;
 
 import java.util.Map;
 

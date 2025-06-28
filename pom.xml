@@ -13,7 +13,6 @@
         <module>kafka-producer</module>
         <module>kafka-producer-performance-testing</module>
         <module>cassandra-performance-testing</module>
-        <module>object-generator</module>
     </modules>
 
     <properties>
