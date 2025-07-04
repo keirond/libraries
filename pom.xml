@@ -13,6 +13,8 @@
         <module>kafka-producer</module>
         <module>kafka-producer-performance-testing</module>
         <module>cassandra-performance-testing</module>
+
+        <module>simple-web-app</module>
     </modules>
 
     <properties>
