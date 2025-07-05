@@ -22,29 +22,42 @@
         <revision>0.0.1</revision>
         <java.version>21</java.version>
 
-
+        <!-- Protocol Buffer Compiler -->
         <protobuf.version>4.31.1</protobuf.version>
         <maven.protobuf.version>3.6.0</maven.protobuf.version>
 
+        <!-- Maven Plugins -->
         <maven.compiler.version>3.14.0</maven.compiler.version>
         <maven.dependency.version>3.8.1</maven.dependency.version>
         <maven.surfire.version>3.5.3</maven.surfire.version>
         <maven.deploy.version>3.1.4</maven.deploy.version>
 
+        <!-- Maven Compiler -->
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
 
+        <!-- Spring, Spring Boot -->
         <spring.boot.version>3.5.3</spring.boot.version>
 
+        <!-- gRPC -->
         <grpc.version>1.73.0</grpc.version>
         <reactor.grpc.version>1.2.4</reactor.grpc.version>
 
+        <!-- Messaging -->
         <kafka.version>4.0.0</kafka.version>
         <confluent.version>8.0.0</confluent.version>
 
+        <!-- Model, JSON -->
         <jackson.version>2.19.1</jackson.version>
         <lombok.version>1.18.38</lombok.version>
+
+        <!-- Logging -->
+        <sl4j.api.version>2.0.17</sl4j.api.version>
+        <logback.version>1.5.18</logback.version>
+
+        <!-- Monitor, Tracing -->
+        <micrometer.version>1.15.1</micrometer.version>
 
     </properties>
 
