@@ -28,7 +28,7 @@ public class PingGrpcCtrl extends PingSvcGrpc.PingSvcImplBase {
       responseObserver.onNext(resBuilder.build());
     } catch (Exception e) {
       responseObserver.onError(
-          Status.INTERNAL.withDescription(e.getMessage()).asRuntimeException());
+          Status.INTERNAL.withDescription(e.getMessage()).withCause(e).asRuntimeException());
     }
     responseObserver.onCompleted();
   }
@@ -43,7 +43,7 @@ public class PingGrpcCtrl extends PingSvcGrpc.PingSvcImplBase {
           responseObserver.onNext(response);
           responseObserver.onCompleted();
         }, e -> responseObserver.onError(
-            Status.INTERNAL.withDescription(e.getMessage()).asRuntimeException()));
+            Status.INTERNAL.withDescription(e.getMessage()).withCause(e).asRuntimeException()));
   }
 
 }
