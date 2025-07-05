@@ -17,4 +17,5 @@ message PingRes {
 
 service PingSvc {
   rpc Ping(PingReq) returns (PingRes);
+  rpc PingRx(PingReq) returns (PingRes);
 }

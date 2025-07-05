@@ -1,7 +1,9 @@
 package org.keiron.libraries.web.app.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.keiron.libraries.web.app.model.PingReq;
 import org.keiron.libraries.web.app.model.PingRes;
+import org.keiron.libraries.web.app.service.StdPingSvc;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,21 +11,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Instant;
-
 @RestController
 @RequestMapping(path = "/api/ping")
+@RequiredArgsConstructor
 public class PingHttpCtrl {
+
+  private final StdPingSvc pingSvc;
 
   @PostMapping(path = "/v1", consumes = {MediaType.APPLICATION_JSON_VALUE})
   public ResponseEntity<?> ping(@RequestBody PingReq command) {
-    try {
-      PingRes result = new PingRes().setReqEpochMillis(command.getReqEpochMillis())
-                           .setResEpochMillis(Instant.now().toEpochMilli());
-      return ResponseEntity.ok(result);
-    } catch (Exception e) {
-      return ResponseEntity.badRequest().body(e.getMessage());
-    }
+    PingRes result = pingSvc.ping(command);
+    return ResponseEntity.ok(result);
   }
 
 }
