@@ -13,11 +13,6 @@
     <artifactId>pt-cassandra</artifactId>
     <version>${revision}</version>
 
-    <properties>
-        <cassandra.driver.version>4.19.0</cassandra.driver.version>
-        <jackson.version>2.19.1</jackson.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.apache.cassandra</groupId>

@@ -48,6 +48,9 @@
         <kafka.version>4.0.0</kafka.version>
         <confluent.version>8.0.0</confluent.version>
 
+        <!-- Databases -->
+        <cassandra.driver.version>4.19.0</cassandra.driver.version>
+
         <!-- Model, JSON -->
         <jackson.version>2.19.1</jackson.version>
         <lombok.version>1.18.38</lombok.version>
