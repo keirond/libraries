@@ -1,11 +1,11 @@
 syntax = "proto3";
 
+// version: 1.0.0
 package org.keiron.proto.ping.v1;
 
 message PingReq {
   int64 req_epoch_millis = 1;
 }
-
 
 message PingRes {
   int64 req_epoch_millis = 1;
