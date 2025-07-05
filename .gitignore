@@ -6,6 +6,7 @@
 .project
 .DS_Store
 
+.bsp/
 target/
 !**/src/main/**/target/
 !**/src/test/**/target/
