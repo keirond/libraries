@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package org.keiron.proto.ping.v1;
+
+message PingReq {
+  int64 req_epoch_millis = 1;
+}
+
+
+message PingRes {
+  int64 req_epoch_millis = 1;
+  int64 res_epoch_millis = 2;
+}
+
+service PingSvc {
+  rpc Ping(PingReq) returns (PingRes);
+}
