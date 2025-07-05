@@ -1,7 +1,10 @@
 syntax = "proto3";
 
 // version: 1.0.0
-package org.keiron.proto.ping.v1;
+package ping.v1;
+
+option java_package = "org.keiron.proto.ping.v1";
+option go_package = "ping/v1;pingpb";
 
 message PingReq {
   int64 req_epoch_millis = 1;
