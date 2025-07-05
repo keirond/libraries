@@ -14,7 +14,7 @@
     <version>${revision}</version>
 
     <properties>
-        <cassandra.java.driver.version>4.19.0</cassandra.java.driver.version>
+        <cassandra.driver.version>4.19.0</cassandra.driver.version>
         <jackson.version>2.19.1</jackson.version>
     </properties>
 
@@ -22,12 +22,12 @@
         <dependency>
             <groupId>org.apache.cassandra</groupId>
             <artifactId>java-driver-core</artifactId>
-            <version>${cassandra.java.driver.version}</version>
+            <version>${cassandra.driver.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.cassandra</groupId>
             <artifactId>java-driver-query-builder</artifactId>
-            <version>${cassandra.java.driver.version}</version>
+            <version>${cassandra.driver.version}</version>
         </dependency>
 
         <dependency>
@@ -75,31 +75,6 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <transformers>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>org.keiron.libraries.kafka.performance.testing.Main</mainClass>
-                                </transformer>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+    <build/>
 
 </project>

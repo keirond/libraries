@@ -9,13 +9,13 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>std-web-app</module>
+
         <module>std-kafka-consumer</module>
         <module>std-kafka-producer</module>
 
         <module>pt-kafka-producer</module>
         <module>pt-cassandra</module>
-
-        <module>std-web-app</module>
     </modules>
 
     <properties>
@@ -23,32 +23,20 @@
         <java.version>21</java.version>
 
         <maven.compiler.version>3.14.0</maven.compiler.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.dependency.version>3.8.1</maven.dependency.version>
         <maven.surfire.version>3.5.3</maven.surfire.version>
         <maven.deploy.version>3.1.4</maven.deploy.version>
+
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>central</id>
-            <url>https://repo.maven.apache.org/maven2</url>
-        </repository>
-        <repository>
-            <id>confluent</id>
-            <url>https://packages.confluent.io/maven/</url>
-        </repository>
-    </repositories>
-
-    <dependencyManagement/>
-
     <build>
-        <finalName>${project.artifactId}-${project.version}-${profile.name}</finalName>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <resources>
             <resource>
-                <directory>${config.dir}</directory>
+                <directory>${project.basedir}/config</directory>
                 <includes>
                     <include>**/*.yml</include>
                     <include>**/*.yaml</include>
@@ -70,6 +58,7 @@
                     <configuration>
                         <source>${maven.compiler.source}</source>
                         <target>${maven.compiler.target}</target>
+                        <encoding>${maven.compiler.encoding}</encoding>
                     </configuration>
                 </plugin>
 
@@ -83,9 +72,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven.surfire.version}</version>
-                    <configuration>
-                        <!-- includes, excludes -->
-                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -96,25 +82,4 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <profiles>
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <profile.name>default</profile.name>
-                <config.dir>${project.basedir}/config</config.dir>
-            </properties>
-        </profile>
-        <profile>
-            <id>dev</id>
-            <properties>
-                <profile.name>dev</profile.name>
-                <config.dir>${project.basedir}/config/dev</config.dir>
-            </properties>
-        </profile>
-    </profiles>
-
 </project>
