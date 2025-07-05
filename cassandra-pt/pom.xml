@@ -10,35 +10,24 @@
     </parent>
 
     <groupId>org.keiron.libraries</groupId>
-    <artifactId>kafka-producer-performance-testing</artifactId>
+    <artifactId>cassandra-pt</artifactId>
     <version>${revision}</version>
 
     <properties>
-        <kafka.version>4.0.0</kafka.version>
-        <confluent.version>8.0.0</confluent.version>
+        <cassandra.java.driver.version>4.19.0</cassandra.java.driver.version>
         <jackson.version>2.19.1</jackson.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
-            <version>${kafka.version}</version>
+            <groupId>org.apache.cassandra</groupId>
+            <artifactId>java-driver-core</artifactId>
+            <version>${cassandra.java.driver.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>connect-api</artifactId>
-            <version>${kafka.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.confluent</groupId>
-            <artifactId>kafka-avro-serializer</artifactId>
-            <version>${confluent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.confluent</groupId>
-            <artifactId>kafka-protobuf-serializer</artifactId>
-            <version>${confluent.version}</version>
+            <groupId>org.apache.cassandra</groupId>
+            <artifactId>java-driver-query-builder</artifactId>
+            <version>${cassandra.java.driver.version}</version>
         </dependency>
 
         <dependency>

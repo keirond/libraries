@@ -11,8 +11,9 @@
     <modules>
         <module>kafka-consumer</module>
         <module>kafka-producer</module>
-        <module>kafka-producer-performance-testing</module>
-        <module>cassandra-performance-testing</module>
+
+        <module>kafka-producer-pt</module>
+        <module>cassandra-pt</module>
 
         <module>simple-web-app</module>
     </modules>
