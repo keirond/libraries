@@ -50,7 +50,7 @@ Performance Testing for Kafka (produce messages)
     }
   ```
 - result (12.5k rps, 18.5 microseconds)
-  ![img.png](docs/tc1.png)
+  ![img.png](asset/tc1.png)
 
 ### Scenario 2: Add acknowledgment constraints from Scenario 1
 
@@ -72,7 +72,7 @@ Performance Testing for Kafka (produce messages)
 - result (12.5k rps, 19 microseconds)
   - higher latency than scenario 1 as waiting acks=all by as least min.isr=2 up to 3)
 
-  ![img.png](docs/tc2.png)
+  ![img.png](asset/tc2.png)
 
 ### Scenario 3: Up VUs to 10 from Scenario 2
 
@@ -92,7 +92,7 @@ Performance Testing for Kafka (produce messages)
 - small message as Scenario 1 (4 fields, ~100 bytes/message)
 
 - result (35k rps, 220 microseconds)
-  ![img.png](docs/tc3.png)
+  ![img.png](asset/tc3.png)
 
 ### Scenario 4: Up VUs to 100 from Scenario 3
 
@@ -114,7 +114,7 @@ Performance Testing for Kafka (produce messages)
 - result (36k rps, 2.7 milliseconds)
   - throughput doesn't increase too much but latency does compare to Scenario 3.
 
-  ![img.png](docs/tc4.png)
+  ![img.png](asset/tc4.png)
 
 ### Scenario 5: Up partitions to 3 from Scenario 4
 
@@ -138,10 +138,10 @@ Performance Testing for Kafka (produce messages)
   - same as Scenario 3 but why,
     - is it because one producer is only stream connection established for sending messages?
 
-  ![img.png](docs/tc5.png)
+  ![img.png](asset/tc5.png)
 
 - 1 producer, 30 partitions (not much change)
-  ![img.png](docs/tc5-1.png)
+  ![img.png](asset/tc5-1.png)
 
 ### Scenario 6: Up producers to 3 from Scenario 5
 
@@ -164,10 +164,10 @@ Performance Testing for Kafka (produce messages)
 - result (32.5k rps, 3 milliseconds)
   - it's slower than 1 producer as it need more CPU, GC, resources to manage.
 
-  ![img.png](docs/tc6.png)
+  ![img.png](asset/tc6.png)
 
 - 3 producers, 30 partitions (not much change)
-  ![img.png](docs/tc6-1.png)
+  ![img.png](asset/tc6-1.png)
 
 ### Scenario 7: Change to lz4 compression from Scenario 5
 
@@ -188,7 +188,7 @@ Performance Testing for Kafka (produce messages)
 - small message as Scenario 1 (4 fields, ~100 bytes/message)
 
 - result (37k rps, 2.7 milliseconds)
-  ![img.png](docs/tc7.png)
+  ![img.png](asset/tc7.png)
 
 ### Scenarios 8: Use avro schema instead of json string from Scenario 5
 
@@ -209,4 +209,4 @@ Performance Testing for Kafka (produce messages)
 - small message as Scenario 1 (4 fields, ~100 bytes/message)
 
 - result (37k rps, 2.7 milliseconds)
-  ![img.png](docs/tc8.png)
+  ![img.png](asset/tc8.png)
