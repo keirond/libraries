@@ -4,7 +4,7 @@
     <property name="LOG_DATEFORMAT_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSSXXX}"/>
     <property name="LOG_LEVEL_PATTERN" value="%5p"/>
     <property name="LOG_PID_PATTERN" value="${PID:-}"/>
-    <property name="LOG_APPLICATION_PATTERN" value="[${APPLICATION_NAME:-}] [${APPLICATION_GROUP:-}]"/>
+    <property name="LOG_APPLICATION_PATTERN" value="${APPLICATION_NAME:-} ${APPLICATION_GROUP:-}"/>
     <property name="LOG_THREAD_PATTERN" value="[%15.15t]"/>
     <property name="LOG_CORRELATION_PATTERN" value="${TRACE_ID:-} ${MSG_ID:-}"/>
     <property name="LOG_LOGGER_PATTERN" value="%-40.40logger{39}"/>
