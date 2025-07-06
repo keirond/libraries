@@ -1,5 +1,4 @@
 <configuration>
-
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 
     <property name="LOG_DATEFORMAT_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSSXXX}"/>
@@ -8,7 +7,7 @@
     <property name="LOG_APPLICATION_PATTERN" value="[${APPLICATION_NAME:-}] [${APPLICATION_GROUP:-}]"/>
     <property name="LOG_THREAD_PATTERN" value="[%15.15t]"/>
     <property name="LOG_CORRELATION_PATTERN" value="${TRACE_ID:-} ${MSG_ID:-}"/>
-    <property name="LOG_LOGGER_PATTERN" value="%clr(%-40.40logger{39}){cyan}"/>
+    <property name="LOG_LOGGER_PATTERN" value="%-40.40logger{39}"/>
     <property name="LOG_MESSAGE_PATTERN" value="%m%n%wEx"/>
     <!-- %wEx is only available for spring-logging, else using $ex for plain Java -->
 
@@ -32,7 +31,7 @@
     <property name="FILE_LOG_CHARSET" value="${file.encoding:-UTF-8}"/>
     <property name="FILE_LOG_THRESHOLD" value="TRACE"/>
 
-    <property name="LOG_FILE" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/spring.log"/>
+    <property name="LOG_FILE" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/app.log"/>
     <property name="LOGBACK_ROLLING_POLICY_FILE_NAME_PATTERN" value="${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz"/>
     <property name="LOGBACK_ROLLING_POLICY_CLEAN_HISTORY_ON_START" value="false"/>
     <property name="LOGBACK_ROLLING_POLICY_MAX_FILE_SIZE" value="10MB"/>
@@ -59,6 +58,6 @@
 
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE" />
+        <appender-ref ref="FILE"/>
     </root>
 </configuration>
