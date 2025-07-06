@@ -35,7 +35,8 @@
         <!-- Maven Compiler -->
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Spring, Spring Boot -->
         <spring.boot.version>3.5.3</spring.boot.version>
@@ -69,6 +70,7 @@
         <resources>
             <resource>
                 <directory>${project.basedir}/config</directory>
+                <filtering>true</filtering>
                 <includes>
                     <include>**/*.yml</include>
                     <include>**/*.yaml</include>
@@ -78,6 +80,7 @@
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
+                <filtering>true</filtering>
             </resource>
         </resources>
 
@@ -128,7 +131,7 @@
                     <configuration>
                         <source>${maven.compiler.source}</source>
                         <target>${maven.compiler.target}</target>
-                        <encoding>${maven.compiler.encoding}</encoding>
+                        <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
                 </plugin>
 
