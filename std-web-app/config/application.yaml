@@ -2,3 +2,7 @@ spring:
   application:
     name: web-app
     group: libraries
+
+  config:
+    import:
+      - optional:classpath:actuator.yaml

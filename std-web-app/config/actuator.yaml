@@ -1,0 +1,42 @@
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      discovery:
+        enabled: true
+      exposure:
+        include: health, info, metrics, prometheus
+        exclude:
+      cors:
+        allowed-origins: '*'
+        allowed-headers: '*'
+        allowed-methods: GET,OPTIONS
+        allow-credentials: false
+
+  endpoint:
+    health:
+      probes:
+        enabled: true
+        add-additional-paths: true
+
+  info:
+    java:
+      enabled: true
+    process:
+      enabled: true
+    ssl:
+      enabled: true
+
+  metrics:
+    distribution:
+      percentiles-histogram:
+        all: true
+      percentiles:
+        all: 0.5, 0.95, 0.99
+
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+        descriptions: false
+        step: 15s

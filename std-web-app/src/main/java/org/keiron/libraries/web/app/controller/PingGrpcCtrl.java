@@ -5,13 +5,13 @@ import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import org.keiron.libraries.web.app.model.PingReq;
 import org.keiron.libraries.web.app.model.PingRes;
+import org.keiron.libraries.web.app.grpc.GrpcController;
 import org.keiron.libraries.web.app.service.StdPingSvc;
 import org.keiron.libraries.web.app.service.StdRxPingSvc;
 import org.keiron.proto.ping.v1.Ping;
 import org.keiron.proto.ping.v1.PingSvcGrpc;
-import org.springframework.stereotype.Controller;
 
-@Controller
+@GrpcController
 @RequiredArgsConstructor
 public class PingGrpcCtrl extends PingSvcGrpc.PingSvcImplBase {
 
