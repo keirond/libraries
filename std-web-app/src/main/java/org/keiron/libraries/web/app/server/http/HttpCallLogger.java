@@ -24,14 +24,13 @@ public class HttpCallLogger implements WebFilter {
     var query = uri.getQuery();
     var url = Optional.ofNullable(path).orElse("") +
                   Optional.ofNullable(query).map("?"::concat).orElse("");
-    log.info("Incoming http request with request_method: {}, request_url: {}", method, url);
+    log.info("Incoming http.reqeust with method: {}, url: {}", method, url);
 
     return chain.filter(exchange).doOnSuccess(unused -> {
       var response = exchange.getResponse();
       var statusCode = Optional.ofNullable(response.getStatusCode()).map(HttpStatusCode::value)
                            .orElse(-1);
-      log.info(
-          "Handled http reqeust with request_method: {}, request_url: {}, response_status_code: {}",
+      log.info("Handled http.reqeust with method: {}, url: {}, and response.status_code: {}",
           method, url, statusCode);
     });
   }

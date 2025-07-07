@@ -20,13 +20,18 @@ public class GrpcConnectionLogger extends ServerTransportFilter {
   @Override
   public Attributes transportReady(Attributes transportAttrs) {
     SocketAddress peerAddress = transportAttrs.get(Grpc.TRANSPORT_ATTR_REMOTE_ADDR);
-    var now = Instant.now();
-    log.info("Connection ready, peerAddress={} at {}", peerAddress, now);
-    return transportAttrs.toBuilder().set(ATTR_CONNECTION_START_TIME, now).build();
+    var startTime = Instant.now();
+    log.info("Connection ready, peerAddress={} at {}", peerAddress, startTime);
+    return transportAttrs.toBuilder().set(ATTR_CONNECTION_START_TIME, startTime).build();
   }
 
   @Override
   public void transportTerminated(Attributes transportAttrs) {
+    if (transportAttrs == null) {
+      log.warn("Connection closed but transport attributes were null");
+      return;
+    }
+
     SocketAddress peerAddress = transportAttrs.get(Grpc.TRANSPORT_ATTR_REMOTE_ADDR);
     Instant startTime = transportAttrs.get(ATTR_CONNECTION_START_TIME);
     var endTime = Instant.now();

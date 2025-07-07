@@ -15,8 +15,8 @@ public class GrpcCallLogger implements ServerInterceptor {
   @Override
   public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> call,
       Metadata headers, ServerCallHandler<ReqT, RespT> next) {
-
-    return null; // TODO
+    // TODO
+    return next.startCall(call, headers);
   }
 
 }

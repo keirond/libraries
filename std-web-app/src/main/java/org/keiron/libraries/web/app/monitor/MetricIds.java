@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum MetricNames {
+public enum MetricIds {
   ;
 
-  private final String name;
+  private final String id;
 
 }

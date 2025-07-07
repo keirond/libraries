@@ -36,26 +36,27 @@ public class GrpcServer {
     var maxMessageSizeInBytes = grpcServerConfiguration.getMaxMessageSizeInBytes();
     var maxHeaderListSizeInBytes = grpcServerConfiguration.getMaxHeaderListSizeInBytes();
 
-    // to make the grpc use TLS
-    //    var serverCertChain = new ClassPathResource("tls/server.crt").getInputStream();
-    //    var serverPrivateKey = new ClassPathResource("tls/server.key").getInputStream();
+    /*
+     to make the grpc use TLS
+     var serverCertChain = new ClassPathResource("tls/server.crt").getInputStream();
+     var serverPrivateKey = new ClassPathResource("tls/server.key").getInputStream();
+    */
 
     server = ServerBuilder.forPort(port)
-                 //                 .handshakeTimeout(handshakeTimeout.toNanos(), TimeUnit.NANOSECONDS)
-                 //                 .keepAliveTime(keepAliveTime.toNanos(), TimeUnit.NANOSECONDS)
-                 //                 .maxConnectionIdle(maxConnectionIdle.toNanos(), TimeUnit.NANOSECONDS)
-                 //                 .maxConnectionAge(maxConnectionAge.toNanos(), TimeUnit.NANOSECONDS)
-                 //                 .maxConnectionAgeGrace(maxConnectionAgeGrace.toNanos(), TimeUnit.NANOSECONDS)
-                 //                 .maxInboundMessageSize(maxMessageSizeInBytes)
-                 //                 .maxInboundMetadataSize(maxHeaderListSizeInBytes)
-                 //                 .addTransportFilter(grpcConnectionLogger)
-                 //                 .useTransportSecurity(serverCertChain, serverPrivateKey)
-                 //                 .intercept(grpcCallLogger)
+                 .handshakeTimeout(handshakeTimeout.toNanos(), TimeUnit.NANOSECONDS)
+                 .keepAliveTime(keepAliveTime.toNanos(), TimeUnit.NANOSECONDS)
+                 .maxConnectionIdle(maxConnectionIdle.toNanos(), TimeUnit.NANOSECONDS)
+                 .maxConnectionAge(maxConnectionAge.toNanos(), TimeUnit.NANOSECONDS)
+                 .maxConnectionAgeGrace(maxConnectionAgeGrace.toNanos(), TimeUnit.NANOSECONDS)
+                 .maxInboundMessageSize(maxMessageSizeInBytes)
+                 .maxInboundMetadataSize(maxHeaderListSizeInBytes)
+                 .addTransportFilter(grpcConnectionLogger)
+                 //.useTransportSecurity(serverCertChain, serverPrivateKey)
+                 .intercept(grpcCallLogger)
                  .addServices(grpcControllerCollector.getServiceDefinitions())
-                 .addService(ProtoReflectionService.newInstance())
+                 .addService(ProtoReflectionService.newInstance()) // for using Postman only
                  .addService(ProtoReflectionServiceV1.newInstance())
-                 //                 .addStreamTracerFactory(grpcStreamTracerFactory)
-                 .directExecutor().build();
+                 .addStreamTracerFactory(grpcStreamTracerFactory).directExecutor().build();
 
     server.start();
     log.info("Netty started on port {} (grpc)", port);

@@ -22,6 +22,7 @@ public class GrpcStreamTracerFactory extends ServerStreamTracer.Factory {
       @Override
       public void streamClosed(Status status) {
         var duration = Duration.between(startTime, Instant.now());
+        // TODO
       }
     };
   }
