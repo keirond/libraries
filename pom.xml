@@ -11,11 +11,11 @@
     <modules>
         <module>std-web-app</module>
 
-        <module>std-kafka-consumer</module>
-        <module>std-kafka-producer</module>
+        <module>std-kafka</module>
 
-        <module>pt-kafka-producer</module>
-        <module>pt-cassandra</module>
+        <module>plain-kafka-producer</module>
+        <module>plain-cassandra</module>
+        <module>std-web-client</module>
     </modules>
 
     <properties>
