@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum PrometheusMetricName {
+public enum MetricIds {
 
   PRODUCE_MESSAGE("produce_message");
 

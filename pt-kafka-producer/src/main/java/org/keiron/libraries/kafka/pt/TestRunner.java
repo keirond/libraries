@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.LockSupport;
 import java.util.stream.IntStream;
 
-import static org.keiron.libraries.kafka.pt.monitor.PrometheusMetricName.PRODUCE_MESSAGE;
+import static org.keiron.libraries.kafka.pt.monitor.MetricIds.PRODUCE_MESSAGE;
 
 @Slf4j
 class TestRunner {
