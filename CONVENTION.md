@@ -32,9 +32,9 @@
 
 ---
 
-### Protocol Buffer Format Convention
+### Protobuf(Protocol Buffer) Format Convention
 
-#### Backward and forward compatibility
+#### Backward and Forward Compatibility
 
 Safe changes:
 
@@ -51,7 +51,7 @@ Breaking changes:
 - Change request or response types for an existing RPC.
 - Change streaming type (unary → streaming) for an existing RPC.
 
-#### Version format
+#### Version Format
 
 `{MAJOR}.{MINOR}.{PATCH}`
 
