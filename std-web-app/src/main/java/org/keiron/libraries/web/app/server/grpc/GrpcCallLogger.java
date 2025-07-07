@@ -4,10 +4,7 @@ import io.grpc.Metadata;
 import io.grpc.ServerCall;
 import io.grpc.ServerCallHandler;
 import io.grpc.ServerInterceptor;
-import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Component
 public class GrpcCallLogger implements ServerInterceptor {

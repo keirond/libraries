@@ -32,8 +32,7 @@ public class GrpcConnectionLogger extends ServerTransportFilter {
     var endTime = Instant.now();
     if (startTime != null) {
       var lifetime = Duration.between(startTime, endTime);
-      log.info(
-          "Connection terminated, peerAddress={}, connectedAt={}, closedAt={}, lifetime={}ms",
+      log.info("Connection terminated, peerAddress={}, connectedAt={}, closedAt={}, lifetime={}ms",
           peerAddress, startTime, endTime, lifetime.toMillis());
     } else {
       log.warn("Connection closed, peerAddress={}, but connect time missing", peerAddress);
