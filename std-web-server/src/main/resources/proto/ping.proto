@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+// version: 1.0.0
+package ping.v1;
+
+option java_package = "org.keiron.proto.ping.v1";
+option go_package = "ping/v1;pingpb";
+
+message Ping {
+  int64 epoch_millis = 1;
+}
+
+message Pong {
+  // latency traveling from client to server
+  int64 latency_millis = 1;
+}
+
+service PingSvc {
+  rpc ping(Ping) returns (Pong);
+}

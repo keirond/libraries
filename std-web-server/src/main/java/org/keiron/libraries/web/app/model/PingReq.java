@@ -8,9 +8,8 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PingRes {
+public class PingReq {
 
-  private long reqEpochMillis;
-  private long resEpochMillis;
+  private long epochMillis;
 
 }
