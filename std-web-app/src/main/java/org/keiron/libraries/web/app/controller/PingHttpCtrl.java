@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping(path = "/api/ping")
@@ -22,6 +23,11 @@ public class PingHttpCtrl {
   public ResponseEntity<?> ping(@RequestBody PingReq command) {
     PingRes result = pingSvc.ping(command);
     return ResponseEntity.ok(result);
+  }
+
+  @PostMapping(path = "/rx/v1", consumes = {MediaType.APPLICATION_JSON_VALUE})
+  public Mono<ResponseEntity<?>> pingRx(@RequestBody PingReq command) {
+    return pingSvc.pingRx(command).map(ResponseEntity::ok);
   }
 
 }
