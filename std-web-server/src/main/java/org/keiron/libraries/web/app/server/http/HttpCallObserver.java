@@ -20,7 +20,7 @@ import java.util.UUID;
 @Slf4j
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class HttpCallTelemetrySvc implements WebFilter {
+public class HttpCallObserver implements WebFilter {
 
   @Override
   public @NonNull Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {

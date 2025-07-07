@@ -9,7 +9,7 @@ import java.time.Instant;
 
 @Slf4j
 @Service
-public class GrpcCallTelemetrySvc implements ServerInterceptor {
+public class GrpcCallObserver implements ServerInterceptor {
 
   private static final Metadata.Key<String> META_CORRELATION_ID = Metadata.Key.of("correlation-id",
       Metadata.ASCII_STRING_MARSHALLER);

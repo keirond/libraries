@@ -12,7 +12,7 @@ import java.time.Instant;
 
 @Slf4j
 @Service
-public class GrpcConnectionTelemetrySvc extends ServerTransportFilter {
+public class GrpcConnectionObserver extends ServerTransportFilter {
 
   private static final Attributes.Key<Instant> ATTR_CONNECTION_START_TIME = Attributes.Key.create(
       "connection-start-time");

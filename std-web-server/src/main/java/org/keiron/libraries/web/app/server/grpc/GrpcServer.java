@@ -20,8 +20,8 @@ public class GrpcServer {
   private Server server;
 
   private final GrpcServerConfiguration grpcServerConfiguration;
-  private final GrpcConnectionTelemetrySvc grpcConnectionTelemetrySvc;
-  private final GrpcCallTelemetrySvc grpcCallTelemetrySvc;
+  private final GrpcConnectionObserver grpcConnectionObserver;
+  private final GrpcCallObserver grpcCallObserver;
   private final GrpcStreamTracerFactory grpcStreamTracerFactory;
   private final GrpcControllerCollector grpcControllerCollector;
 
@@ -50,9 +50,9 @@ public class GrpcServer {
                  .maxConnectionAgeGrace(maxConnectionAgeGrace.toNanos(), TimeUnit.NANOSECONDS)
                  .maxInboundMessageSize(maxMessageSizeInBytes)
                  .maxInboundMetadataSize(maxHeaderListSizeInBytes)
-                 .addTransportFilter(grpcConnectionTelemetrySvc)
+                 .addTransportFilter(grpcConnectionObserver)
                  //.useTransportSecurity(serverCertChain, serverPrivateKey)
-                 .intercept(grpcCallTelemetrySvc)
+                 .intercept(grpcCallObserver)
                  .addServices(grpcControllerCollector.getServiceDefinitions())
                  .addService(ProtoReflectionService.newInstance()) // for using Postman only
                  .addService(ProtoReflectionServiceV1.newInstance())
