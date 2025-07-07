@@ -1,4 +1,4 @@
-package org.keiron.libraries.web.app.grpc;
+package org.keiron.libraries.web.app.server.grpc;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

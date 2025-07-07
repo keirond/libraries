@@ -1,4 +1,4 @@
-package org.keiron.libraries.web.app.grpc;
+package org.keiron.libraries.web.app.server.grpc;
 
 import io.grpc.Attributes;
 import io.grpc.Grpc;
@@ -21,7 +21,7 @@ public class GrpcConnectionLogger extends ServerTransportFilter {
   public Attributes transportReady(Attributes transportAttrs) {
     SocketAddress peerAddress = transportAttrs.get(Grpc.TRANSPORT_ATTR_REMOTE_ADDR);
     var now = Instant.now();
-    log.info("Connection ready, peerAddress = {} at {}", peerAddress, now);
+    log.info("Connection ready, peerAddress={} at {}", peerAddress, now);
     return transportAttrs.toBuilder().set(ATTR_CONNECTION_START_TIME, now).build();
   }
 
@@ -33,10 +33,10 @@ public class GrpcConnectionLogger extends ServerTransportFilter {
     if (startTime != null) {
       var lifetime = Duration.between(startTime, endTime);
       log.info(
-          "Connection terminated, peerAddress = {}, connectedAt = {}, closedAt = {}, lifetime = {}ms",
+          "Connection terminated, peerAddress={}, connectedAt={}, closedAt={}, lifetime={}ms",
           peerAddress, startTime, endTime, lifetime.toMillis());
     } else {
-      log.warn("Connection closed, peerAddress = {}, but connect time missing", peerAddress);
+      log.warn("Connection closed, peerAddress={}, but connect time missing", peerAddress);
     }
   }
 

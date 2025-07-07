@@ -1,4 +1,4 @@
-package org.keiron.libraries.web.app.grpc;
+package org.keiron.libraries.web.app.server.grpc;
 
 import io.grpc.Metadata;
 import io.grpc.ServerCall;

@@ -1,11 +1,11 @@
-package org.keiron.libraries.web.app.grpc;
+package org.keiron.libraries.web.app.server.grpc;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.protobuf.services.ProtoReflectionService;
 import io.grpc.protobuf.services.ProtoReflectionServiceV1;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -37,37 +37,44 @@ public class GrpcServer {
     var maxHeaderListSizeInBytes = grpcServerConfiguration.getMaxHeaderListSizeInBytes();
 
     // to make the grpc use TLS
-    var serverCertChain = new ClassPathResource("tls/server.crt").getInputStream();
-    var serverPrivateKey = new ClassPathResource("tls/server.key").getInputStream();
+    //    var serverCertChain = new ClassPathResource("tls/server.crt").getInputStream();
+    //    var serverPrivateKey = new ClassPathResource("tls/server.key").getInputStream();
 
     server = ServerBuilder.forPort(port)
-                 .handshakeTimeout(handshakeTimeout.toNanos(), TimeUnit.NANOSECONDS)
-                 .keepAliveTime(keepAliveTime.toNanos(), TimeUnit.NANOSECONDS)
-                 .maxConnectionIdle(maxConnectionIdle.toNanos(), TimeUnit.NANOSECONDS)
-                 .maxConnectionAge(maxConnectionAge.toNanos(), TimeUnit.NANOSECONDS)
-                 .maxConnectionAgeGrace(maxConnectionAgeGrace.toNanos(), TimeUnit.NANOSECONDS)
-                 .maxInboundMessageSize(maxMessageSizeInBytes)
-                 .maxInboundMetadataSize(maxHeaderListSizeInBytes).directExecutor()
-                 .addTransportFilter(grpcConnectionLogger)
-                 .useTransportSecurity(serverCertChain, serverPrivateKey).intercept(grpcCallLogger)
+                 //                 .handshakeTimeout(handshakeTimeout.toNanos(), TimeUnit.NANOSECONDS)
+                 //                 .keepAliveTime(keepAliveTime.toNanos(), TimeUnit.NANOSECONDS)
+                 //                 .maxConnectionIdle(maxConnectionIdle.toNanos(), TimeUnit.NANOSECONDS)
+                 //                 .maxConnectionAge(maxConnectionAge.toNanos(), TimeUnit.NANOSECONDS)
+                 //                 .maxConnectionAgeGrace(maxConnectionAgeGrace.toNanos(), TimeUnit.NANOSECONDS)
+                 //                 .maxInboundMessageSize(maxMessageSizeInBytes)
+                 //                 .maxInboundMetadataSize(maxHeaderListSizeInBytes)
+                 //                 .addTransportFilter(grpcConnectionLogger)
+                 //                 .useTransportSecurity(serverCertChain, serverPrivateKey)
+                 //                 .intercept(grpcCallLogger)
                  .addServices(grpcControllerCollector.getServiceDefinitions())
+                 .addService(ProtoReflectionService.newInstance())
                  .addService(ProtoReflectionServiceV1.newInstance())
-                 .addStreamTracerFactory(grpcStreamTracerFactory).build();
+                 //                 .addStreamTracerFactory(grpcStreamTracerFactory)
+                 .directExecutor().build();
 
     server.start();
     log.info("Netty started on port {} (grpc)", port);
 
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
       log.info("Shutting down gRPC grpc...");
-      GrpcServer.this.stop();
+      try {
+        GrpcServer.this.stop();
+      } catch (InterruptedException e) {
+        log.error("gRPC stopping interrupted with exception {}", e.getMessage(), e);
+      }
       log.info("gRPC grpc shutdown gracefully");
     }, "grpc-shutdown"));
   }
 
   @PreDestroy
-  public void stop() {
+  public void stop() throws InterruptedException {
     if (server != null)
-      server.shutdown();
+      server.shutdown().awaitTermination(30, TimeUnit.SECONDS);
   }
 
 }

@@ -1,4 +1,4 @@
-package org.keiron.libraries.web.app.grpc;
+package org.keiron.libraries.web.app.server.grpc;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Controller;

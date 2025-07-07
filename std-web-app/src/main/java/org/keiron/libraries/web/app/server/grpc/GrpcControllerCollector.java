@@ -1,4 +1,4 @@
-package org.keiron.libraries.web.app.grpc;
+package org.keiron.libraries.web.app.server.grpc;
 
 import io.grpc.BindableService;
 import io.grpc.ServerServiceDefinition;
