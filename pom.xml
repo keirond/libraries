@@ -38,6 +38,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Spring, Spring Boot -->
+        <spring.version>3.5.1</spring.version>
         <spring.boot.version>3.5.3</spring.boot.version>
 
         <!-- gRPC -->
