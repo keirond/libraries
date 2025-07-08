@@ -15,7 +15,6 @@ public class Utils {
       for (Sort.Order order : orders) {
         String property = order.getProperty();
         Sort.Direction direction = order.getDirection();
-        // Sort.NullHandling nullHandling = order.getNullHandling(); // unsupported
         try {
           Field field = clazz.getField(property);
           field.setAccessible(true);

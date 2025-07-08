@@ -2,6 +2,7 @@ package org.keiron.libraries.web.app.exception;
 
 import lombok.NoArgsConstructor;
 
+@AppException
 @NoArgsConstructor
 public class DataNotFoundException extends DataException {
 
