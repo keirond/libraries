@@ -55,8 +55,10 @@ public class ObjectGenerator implements Generator<Map<String, Object>> {
         double min = node.path("_min").asDouble(0.0);
         double max = node.path("_max").asDouble(0.0);
         int precision = node.path("_precision").asInt(0);
-        yield BigDecimal.valueOf(min + random.nextDouble(max - min))
-                  .setScale(precision, RoundingMode.HALF_UP).doubleValue();
+        yield BigDecimal
+            .valueOf(min + random.nextDouble(max - min))
+            .setScale(precision, RoundingMode.HALF_UP)
+            .doubleValue();
       }
       case "random_pick" -> {
         var list = new ArrayList<>();

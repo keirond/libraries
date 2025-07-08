@@ -19,13 +19,17 @@ public class PingGrpcCtrl extends PingSvcGrpc.PingSvcImplBase {
   public void ping(PingOuterClass.Ping request,
       StreamObserver<PingOuterClass.Pong> responseObserver) {
     PingReq command = new PingReq().setEpochMillis(request.getEpochMillis());
-    pingSvc.ping(command).map(
-        result -> PingOuterClass.Pong.newBuilder().setLatencyMillis(command.getEpochMillis())
-                      .build()).subscribe(response -> {
-      responseObserver.onNext(response);
-      responseObserver.onCompleted();
-    }, e -> responseObserver.onError(
-        Status.INTERNAL.withDescription(e.getMessage()).withCause(e).asRuntimeException()));
+    pingSvc
+        .ping(command)
+        .map(result -> PingOuterClass.Pong
+            .newBuilder()
+            .setLatencyMillis(command.getEpochMillis())
+            .build())
+        .subscribe(response -> {
+          responseObserver.onNext(response);
+          responseObserver.onCompleted();
+        }, e -> responseObserver.onError(
+            Status.INTERNAL.withDescription(e.getMessage()).withCause(e).asRuntimeException()));
   }
 
 }

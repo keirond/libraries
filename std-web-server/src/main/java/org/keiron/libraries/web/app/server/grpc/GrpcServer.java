@@ -45,20 +45,23 @@ public class GrpcServer {
      var serverPrivateKey = new ClassPathResource("tls/server.key").getInputStream();
     */
 
-    server = ServerBuilder.forPort(port)
-                 .handshakeTimeout(handshakeTimeout.toNanos(), TimeUnit.NANOSECONDS)
-                 .keepAliveTime(keepAliveTime.toNanos(), TimeUnit.NANOSECONDS)
-                 .maxConnectionIdle(maxConnectionIdle.toNanos(), TimeUnit.NANOSECONDS)
-                 .maxConnectionAge(maxConnectionAge.toNanos(), TimeUnit.NANOSECONDS)
-                 .maxConnectionAgeGrace(maxConnectionAgeGrace.toNanos(), TimeUnit.NANOSECONDS)
-                 .maxInboundMessageSize(maxMessageSizeInBytes)
-                 .maxInboundMetadataSize(maxHeaderListSizeInBytes)
-                 .addTransportFilter(grpcConnectionObserver)
-                 //.useTransportSecurity(serverCertChain, serverPrivateKey)
-                 .intercept(grpcCallObserver)
-                 .addServices(grpcControllerCollector.getServiceDefinitions())
-                 .addService(protoReflectionService).addStreamTracerFactory(grpcStreamTracerFactory)
-                 .directExecutor().build();
+    server = ServerBuilder
+        .forPort(port)
+        .handshakeTimeout(handshakeTimeout.toNanos(), TimeUnit.NANOSECONDS)
+        .keepAliveTime(keepAliveTime.toNanos(), TimeUnit.NANOSECONDS)
+        .maxConnectionIdle(maxConnectionIdle.toNanos(), TimeUnit.NANOSECONDS)
+        .maxConnectionAge(maxConnectionAge.toNanos(), TimeUnit.NANOSECONDS)
+        .maxConnectionAgeGrace(maxConnectionAgeGrace.toNanos(), TimeUnit.NANOSECONDS)
+        .maxInboundMessageSize(maxMessageSizeInBytes)
+        .maxInboundMetadataSize(maxHeaderListSizeInBytes)
+        .addTransportFilter(grpcConnectionObserver)
+        //.useTransportSecurity(serverCertChain, serverPrivateKey)
+        .intercept(grpcCallObserver)
+        .addServices(grpcControllerCollector.getServiceDefinitions())
+        .addService(protoReflectionService)
+        .addStreamTracerFactory(grpcStreamTracerFactory)
+        .directExecutor()
+        .build();
 
     server.start();
     log.info("Netty started on port {} (grpc)", port);

@@ -25,7 +25,8 @@ public class PrometheusExporter {
       }
 
       byte[] bytes = response.getBytes(StandardCharsets.UTF_8);
-      httpExchange.getResponseHeaders()
+      httpExchange
+          .getResponseHeaders()
           .set("Content-Type", "text/plain; version=0.0.4; charset=utf-8");
       httpExchange.sendResponseHeaders(200, bytes.length);
       try (OutputStream os = httpExchange.getResponseBody()) {

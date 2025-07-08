@@ -30,16 +30,19 @@ public class HttpCallObserver implements WebFilter {
     var method = request.getMethod();
     var uri = request.getURI();
     var url = Optional.ofNullable(uri.getPath()).orElse("") +
-                  Optional.ofNullable(uri.getQuery()).map("?"::concat).orElse("");
-    var correlationId = headers.getOrDefault("correlation-id",
-        Collections.singletonList(UUID.randomUUID().toString())).getFirst();
+        Optional.ofNullable(uri.getQuery()).map("?"::concat).orElse("");
+    var correlationId = headers
+        .getOrDefault("correlation-id", Collections.singletonList(UUID.randomUUID().toString()))
+        .getFirst();
 
     log.info("Incoming http.request with method: {} and url: {}", method, url);
 
     return chain.filter(exchange).doOnSuccess(unused -> {
       var response = exchange.getResponse();
-      var statusCode = Optional.ofNullable(response.getStatusCode()).map(HttpStatusCode::value)
-                           .orElse(-1);
+      var statusCode = Optional
+          .ofNullable(response.getStatusCode())
+          .map(HttpStatusCode::value)
+          .orElse(-1);
 
       log.info(
           "Closed http.request with method: {}, url: {}, response.status_code: {}, and duration: {}ms",

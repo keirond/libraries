@@ -14,9 +14,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class StdPingSvc implements PingSvc {
 
   public Mono<PongRes> ping(PingReq command) {
-    return Mono.fromSupplier(() -> new PongRes().setLatencyMillis(
-        Instant.now().toEpochMilli() - command.getEpochMillis())).delaySubscription(
-        Mono.fromSupplier(() -> ThreadLocalRandom.current().nextLong(100, 200)));
+    return Mono
+        .fromSupplier(() -> new PongRes().setLatencyMillis(
+            Instant.now().toEpochMilli() - command.getEpochMillis()))
+        .delaySubscription(Mono.fromSupplier(() -> ThreadLocalRandom.current().nextLong(100, 200)));
   }
 
 }

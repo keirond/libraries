@@ -52,7 +52,7 @@ class TestRunner {
         try {
           executor.submit(() -> {
             while (Duration.between(start, Instant.now()).compareTo(duration) < 0 &&
-                       (iterations == -1 || atomicIterations.getAndDecrement() > 0)) {
+                (iterations == -1 || atomicIterations.getAndDecrement() > 0)) {
               runTask(index % noOfProducers);
               LockSupport.parkNanos(1_000);
             }
