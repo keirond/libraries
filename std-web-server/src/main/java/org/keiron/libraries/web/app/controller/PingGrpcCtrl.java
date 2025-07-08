@@ -5,7 +5,7 @@ import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import org.keiron.libraries.web.app.model.PingReq;
 import org.keiron.libraries.web.app.server.grpc.GrpcController;
-import org.keiron.libraries.web.app.service.StdPingSvc;
+import org.keiron.libraries.web.app.service.PingSvc;
 import org.keiron.proto.ping.v1.PingOuterClass;
 import org.keiron.proto.ping.v1.PingSvcGrpc;
 
@@ -13,7 +13,7 @@ import org.keiron.proto.ping.v1.PingSvcGrpc;
 @RequiredArgsConstructor
 public class PingGrpcCtrl extends PingSvcGrpc.PingSvcImplBase {
 
-  private final StdPingSvc pingSvc;
+  private final PingSvc pingSvc;
 
   @Override
   public void ping(PingOuterClass.Ping request,

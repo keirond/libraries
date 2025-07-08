@@ -1,4 +1,4 @@
-package org.keiron.libraries.web.app.server.model;
+package org.keiron.libraries.web.app.server.base;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -35,5 +35,13 @@ public class ErrorInfo {
    * A link to the documentation for the specific error code.
    */
   private @Nullable String docUrl;
+
+  public static ErrorInfo of(ErrorE error) {
+    return of(error.getCode(), error.getMessage(), error.getType());
+  }
+
+  public static ErrorInfo of(String code, String message, ErrorType type) {
+    return new ErrorInfo().setCode(code).setMessage(message).setType(type);
+  }
 
 }

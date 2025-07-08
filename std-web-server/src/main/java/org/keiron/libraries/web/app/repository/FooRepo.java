@@ -17,6 +17,6 @@ public interface FooRepo {
 
   Mono<FooEntity> update(FooEntity foo);
 
-  Mono<Void> delete(String id);
+  Mono<Boolean> delete(String id);
 
 }

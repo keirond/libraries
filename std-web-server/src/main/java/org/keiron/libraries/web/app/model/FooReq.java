@@ -5,17 +5,14 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.util.List;
-
 @Data
 @Accessors(chain = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class BatchOpsRes<T> {
+public class FooReq {
 
-  private List<T> success;
-  private List<FailedItem<T>> failure;
-
-  @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-  public record FailedItem<T>(T item, String reason) {}
+  private String name;
+  private String description;
+  private int value;
+  private long timestamp;
 
 }

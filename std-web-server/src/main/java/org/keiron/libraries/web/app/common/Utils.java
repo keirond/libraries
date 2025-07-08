@@ -18,8 +18,8 @@ public class Utils {
         try {
           Field field = clazz.getField(property);
           field.setAccessible(true);
-          Object u = field.get(x);
-          Object v = field.get(y);
+          var u = field.get(x);
+          var v = field.get(y);
           int curr = compare(u, v);
           if (curr == 0)
             continue;

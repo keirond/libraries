@@ -2,7 +2,7 @@ package org.keiron.libraries.web.app.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.keiron.libraries.web.app.model.PingReq;
-import org.keiron.libraries.web.app.service.StdPingSvc;
+import org.keiron.libraries.web.app.service.PingSvc;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class PingHttpCtrl {
 
-  private final StdPingSvc pingSvc;
+  private final PingSvc pingSvc;
 
   @PostMapping(path = "")
   public Mono<ResponseEntity<?>> pingRx(@RequestBody PingReq command) {

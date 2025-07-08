@@ -1,4 +1,4 @@
-package org.keiron.libraries.web.app.server.model;
+package org.keiron.libraries.web.app.server.base;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,8 @@ public enum ErrorType {
 
   INVALID_REQUEST_ERROR("invalid_request_error"),
   IDEMPOTENCY_ERROR("idempotency_error"),
-  API_ERROR("api_error");
+  API_ERROR("api_error"),
+  ;
 
   private final String name;
 }
