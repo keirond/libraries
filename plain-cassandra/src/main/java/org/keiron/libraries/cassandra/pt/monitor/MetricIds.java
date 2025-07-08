@@ -1,11 +1,11 @@
 package org.keiron.libraries.cassandra.pt.monitor;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
-public enum PrometheusMetricName {
+@RequiredArgsConstructor
+public enum MetricIds {
 
   PRODUCE_MESSAGE("produce_message");
 

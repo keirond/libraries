@@ -1,11 +1,11 @@
 package org.keiron.libraries.web.app.server.grpc;
 
+import io.grpc.BindableService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import io.grpc.protobuf.services.ProtoReflectionService;
-import io.grpc.protobuf.services.ProtoReflectionServiceV1;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -24,6 +24,9 @@ public class GrpcServer {
   private final GrpcCallObserver grpcCallObserver;
   private final GrpcStreamTracerFactory grpcStreamTracerFactory;
   private final GrpcControllerCollector grpcControllerCollector;
+
+  @Qualifier("protoReflectionService")
+  private final BindableService protoReflectionService;
 
   @PostConstruct
   public void start() throws Exception {
@@ -54,9 +57,8 @@ public class GrpcServer {
                  //.useTransportSecurity(serverCertChain, serverPrivateKey)
                  .intercept(grpcCallObserver)
                  .addServices(grpcControllerCollector.getServiceDefinitions())
-                 .addService(ProtoReflectionService.newInstance()) // for using Postman only
-                 .addService(ProtoReflectionServiceV1.newInstance())
-                 .addStreamTracerFactory(grpcStreamTracerFactory).directExecutor().build();
+                 .addService(protoReflectionService).addStreamTracerFactory(grpcStreamTracerFactory)
+                 .directExecutor().build();
 
     server.start();
     log.info("Netty started on port {} (grpc)", port);

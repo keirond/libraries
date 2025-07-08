@@ -6,7 +6,6 @@ import org.keiron.libraries.web.app.model.PongRes;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -15,9 +14,9 @@ import java.util.concurrent.ThreadLocalRandom;
 public class StdPingSvc implements PingSvc {
 
   public Mono<PongRes> ping(PingReq command) {
-    long delayMillis = ThreadLocalRandom.current().nextLong(100, 200);
-    return Mono.delay(Duration.ofMillis(delayMillis)).map(ignore -> new PongRes().setLatencyMillis(
-        Instant.now().toEpochMilli() - command.getEpochMillis()));
+    return Mono.fromSupplier(() -> new PongRes().setLatencyMillis(
+        Instant.now().toEpochMilli() - command.getEpochMillis())).delaySubscription(
+        Mono.fromSupplier(() -> ThreadLocalRandom.current().nextLong(100, 200)));
   }
 
 }

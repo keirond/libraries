@@ -3,6 +3,11 @@ spring:
     name: web-app
     group: libraries
 
+  profiles:
+    active: dev, prometheus
+    include: dev, prod, prometheus, influx
+
   config:
     import:
       - optional:classpath:actuator.yaml
+
