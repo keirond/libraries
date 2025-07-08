@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum TagIds {
+public enum TagIdE {
   ;
 
   private final String id;
