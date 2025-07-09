@@ -1,5 +1,6 @@
 package org.keiron.libraries.web.app.server.base;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
@@ -9,6 +10,7 @@ import org.springframework.lang.Nullable;
 @Data
 @Accessors(chain = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorInfo {
 
   /**
@@ -29,7 +31,7 @@ public class ErrorInfo {
   /**
    * A reference to the error category this error belongs to.
    */
-  private ErrorType type;
+  private String type;
 
   /**
    * A link to the documentation for the specific error code.
@@ -41,7 +43,7 @@ public class ErrorInfo {
   }
 
   public static ErrorInfo of(String code, String message, ErrorType type) {
-    return new ErrorInfo().setCode(code).setMessage(message).setType(type);
+    return new ErrorInfo().setCode(code).setMessage(message).setType(type.getName());
   }
 
 }

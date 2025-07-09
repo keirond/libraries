@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
@@ -12,9 +14,12 @@ import java.util.concurrent.ThreadLocalRandom;
 public class PingSvc {
 
   public Mono<Long> ping(long at) {
-    return Mono
-        .fromSupplier(() -> Instant.now().toEpochMilli() - at)
-        .delaySubscription(Mono.fromSupplier(() -> ThreadLocalRandom.current().nextLong(100, 200)));
+    return Mono.defer(() -> {
+      var delayMillis = ThreadLocalRandom.current().nextLong(100, 200);
+      return Mono
+          .delay(Duration.of(delayMillis, ChronoUnit.MILLIS))
+          .map(ignored -> Instant.now().toEpochMilli() - at);
+    });
   }
 
 }

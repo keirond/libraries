@@ -10,7 +10,7 @@ public class FooEntity {
   private String id;
   private String name;
   private String description;
-  private int value;
-  private long timestamp;
+  private Integer value;
+  private Long timestamp;
 
 }
