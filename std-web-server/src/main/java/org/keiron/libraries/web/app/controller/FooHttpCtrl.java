@@ -22,7 +22,7 @@ public class FooHttpCtrl {
   private final FooSvc fooSvc;
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Mono<ResponseEntity<BaseRes<FooRes>>> get(@RequestParam @NotBlank String id) {
+  public Mono<ResponseEntity<BaseRes<FooRes>>> getOne(@RequestParam @NotBlank String id) {
     return fooSvc
         .getById(id)
         .map(fooRes -> new BaseRes<FooRes>().setData(fooRes))
@@ -31,10 +31,28 @@ public class FooHttpCtrl {
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public Mono<ResponseEntity<BaseRes<FooRes>>> get(@RequestBody @Valid FooReq request) {
+  public Mono<ResponseEntity<BaseRes<FooRes>>> createOne(@RequestBody @Valid FooReq request) {
     return fooSvc
         .create(request)
         .map(fooRes -> new BaseRes<FooRes>().setData(fooRes))
+        .map(ResponseEntity::ok);
+  }
+
+  @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public Mono<ResponseEntity<BaseRes<FooRes>>> updateOne(@RequestParam @NotBlank String id,
+      @RequestBody @Valid FooReq request) {
+    return fooSvc
+        .update(id, request)
+        .map(fooRes -> new BaseRes<FooRes>().setData(fooRes))
+        .map(ResponseEntity::ok);
+  }
+
+  @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public Mono<ResponseEntity<BaseRes<Boolean>>> deleteOne(@RequestParam @NotBlank String id) {
+    return fooSvc
+        .delete(id)
+        .map(boolRes -> new BaseRes<Boolean>().setData(boolRes))
         .map(ResponseEntity::ok);
   }
 

@@ -28,7 +28,7 @@ public class InMemoryFooRepo implements FooRepo {
 
   @Override
   public Mono<FooEntity> save(FooEntity foo) {
-    return Mono.fromCallable(() -> storage.put(foo.getId(), foo));
+    return Mono.fromCallable(() -> storage.put(foo.getId(), foo)).thenReturn(foo);
   }
 
   @Override
@@ -37,8 +37,8 @@ public class InMemoryFooRepo implements FooRepo {
       if (storage.containsKey(foo.getId())) {
         throw new DuplicateDataKeyException("Duplicate ID: %s".formatted(foo.getId()));
       }
-      return storage.put(foo.getId(), foo);
-    });
+      return storage.putIfAbsent(foo.getId(), foo);
+    }).thenReturn(foo);
   }
 
   @Override
@@ -70,7 +70,7 @@ public class InMemoryFooRepo implements FooRepo {
         throw new DataNotFoundException("Not found data with ID: %s".formatted(id));
       }
       return storage.put(id, foo);
-    });
+    }).thenReturn(foo);
   }
 
   @Override

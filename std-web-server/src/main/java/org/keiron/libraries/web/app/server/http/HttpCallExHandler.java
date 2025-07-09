@@ -11,13 +11,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.support.WebExchangeBindException;
+import org.springframework.web.server.MethodNotAllowedException;
 import org.springframework.web.server.MissingRequestValueException;
 import org.springframework.web.server.UnsupportedMediaTypeStatusException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.UNSUPPORTED_MEDIA_TYPE;
+import static org.springframework.http.HttpStatus.*;
 
 @Slf4j
 @RestControllerAdvice
@@ -45,7 +47,17 @@ public class HttpCallExHandler {
     return ResponseEntity
         .status(UNSUPPORTED_MEDIA_TYPE)
         .body(new BaseRes<>().setError(
-            ErrorInfo.of(ErrorE.UNSUPPORTED_MEDIA_TYPE).setMessage(e.getMessage())));
+            ErrorInfo.of(ErrorE.INVALID_REQUEST).setMessage(e.getMessage())));
+  }
+
+  // 405 METHOD_NOT_ALLOWED
+
+  @ExceptionHandler(MethodNotAllowedException.class)
+  public ResponseEntity<?> handle(MethodNotAllowedException e) {
+    return ResponseEntity
+        .status(METHOD_NOT_ALLOWED)
+        .body(new BaseRes<>().setError(
+            ErrorInfo.of(ErrorE.INVALID_REQUEST).setMessage(e.getMessage())));
   }
 
   // 404 NOT_FOUND
@@ -86,7 +98,8 @@ public class HttpCallExHandler {
   }
 
   /**
-   * Happened when violating constraint validations
+   * Happened when violating constraint validations on query params, path variables, headers,
+   * method-level constraints.
    */
   @ExceptionHandler(ConstraintViolationException.class)
   public ResponseEntity<?> handle(ConstraintViolationException e) {
@@ -98,8 +111,28 @@ public class HttpCallExHandler {
         .badRequest()
         .body(new BaseRes<>().setError(ErrorInfo
             .of(ErrorE.INVALID_REQUEST)
-            .setMessage(e.getMessage())
-            .setParam(StringUtils.collectionToDelimitedString(params, ", "))));
+            .setParam(StringUtils.collectionToDelimitedString(params, ", "))
+            .setMessage(e.getMessage())));
+  }
+
+  /**
+   * Happened when violating constraint validations on request bodies.
+   */
+  @ExceptionHandler(WebExchangeBindException.class)
+  public ResponseEntity<?> handleBindException(WebExchangeBindException e) {
+    var errors = e.getFieldErrors();
+    var params = new HashSet<String>();
+    var messages = new ArrayList<String>();
+    errors.forEach(error -> {
+      params.add(error.getField());
+      messages.add("%s: %s".formatted(error.getField(), error.getDefaultMessage()));
+    });
+    return ResponseEntity
+        .badRequest()
+        .body(new BaseRes<>().setError(ErrorInfo
+            .of(ErrorE.INVALID_REQUEST)
+            .setParam(StringUtils.collectionToDelimitedString(params, ", "))
+            .setMessage(StringUtils.collectionToDelimitedString(messages, "; "))));
   }
 
   /**
