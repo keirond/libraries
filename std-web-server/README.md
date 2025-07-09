@@ -1,0 +1,24 @@
+### TODO
+
+- [ ] Data Pagination for gRPC
+- [ ] Client Streaming for gRPC
+- [ ] Server Streaming for gRPC
+- [ ] BiDirection Streaming for gRPC
+- [ ] Security Middleware
+- [ ] Authentication & Authenticator
+- [ ] Metrics Exporter & Monitor AOP
+- [ ] Interceptor & Logging AOP
+- [ ] Distributed Tracing Integration
+- [ ] Auditing connections
+- [ ] Rate-Limiting
+- [ ] Deadline / Timeout Management
+- [ ] mTLS & Certificate Rotation
+- [ ] Custom Request Validation Middleware
+- [ ] Role-based Access Control
+- [ ] Circuit Breaker
+- [ ] Retry & Backoff Logic
+- [ ] Idempotency Key Handling (Hybrid approach (Cache + Database))
+- [ ] Uniqueness Key Generator (Snowflake ID (due to time-sortable & scalable) + customer-friendly key generator)
+- [ ] Graceful Shutdown / Connection Draining
+- [ ] Dynamic Configuration Reload
+- [ ] Health Check Service
