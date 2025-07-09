@@ -40,3 +40,8 @@ management:
         enabled: true
         descriptions: false
         step: 15s
+
+  influx:
+    metrics:
+      export:
+        enabled: false

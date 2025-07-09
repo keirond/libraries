@@ -4,8 +4,8 @@ spring:
     group: libraries
 
   profiles:
+    # dev, prod, prometheus, influx
     active: dev, prometheus
-    include: dev, prod, prometheus, influx
 
   config:
     import:

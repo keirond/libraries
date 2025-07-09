@@ -14,15 +14,17 @@ public class GrpcProtoReflectionSvcFactory {
   @Bean
   @Profile("dev")
   @Qualifier("protoReflectionService")
-  public BindableService protoReflectionServiceDev() {
-    return ProtoReflectionService.newInstance();
+  public ReflectionBindableService protoReflectionServiceDev() {
+    return new ReflectionBindableService(ProtoReflectionService.newInstance());
   }
 
   @Bean
   @Profile("prod")
   @Qualifier("protoReflectionService")
-  public BindableService protoReflectionServiceProd() {
-    return ProtoReflectionServiceV1.newInstance();
+  public ReflectionBindableService protoReflectionServiceProd() {
+    return new ReflectionBindableService(ProtoReflectionServiceV1.newInstance());
   }
+
+  public record ReflectionBindableService(BindableService bindableService) {}
 
 }

@@ -1,6 +1,5 @@
 package org.keiron.libraries.web.app.server.grpc;
 
-import io.grpc.BindableService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +25,7 @@ public class GrpcServer {
   private final GrpcControllerCollector grpcControllerCollector;
 
   @Qualifier("protoReflectionService")
-  private final BindableService protoReflectionService;
+  private final GrpcProtoReflectionSvcFactory.ReflectionBindableService protoReflectionService;
 
   @PostConstruct
   public void start() throws Exception {
@@ -58,7 +57,7 @@ public class GrpcServer {
         //.useTransportSecurity(serverCertChain, serverPrivateKey)
         .intercept(grpcCallObserver)
         .addServices(grpcControllerCollector.getServiceDefinitions())
-        .addService(protoReflectionService)
+        .addService(protoReflectionService.bindableService())
         .addStreamTracerFactory(grpcStreamTracerFactory)
         .directExecutor()
         .build();
