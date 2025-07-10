@@ -1,7 +1,6 @@
 package org.keiron.libraries.web.app.server.http;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.lang.NonNull;
@@ -20,11 +19,11 @@ import java.util.UUID;
 
 @Slf4j
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(5)
 public class HttpCallObserver implements WebFilter {
 
   @Override
-  public @NonNull Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+  public @NonNull Mono<Void> filter(@NonNull ServerWebExchange exchange, WebFilterChain chain) {
     var startTime = Instant.now();
     var request = exchange.getRequest();
     var headers = request.getHeaders();

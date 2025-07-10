@@ -37,6 +37,8 @@ I do what I think
 
 #### GRPC Call Exception Handler (!!)
 
+##     
+
 ---
 
 ### HTTP Server
@@ -48,14 +50,25 @@ I do what I think
 - `spring-boot-starter-webflux` for Netty server
 
 #### GRPC Connection Observer (!!)
+
 #### GRPC Connection Pool (!!, Tomcat only)
+
 #### HTTP Call Security (!!)
+
 #### HTTP Call Observer (!!)
-#### HTTP Call Exception Handler 
+
+#### HTTP Call Exception Handler
+
 - Using `@RestControllerAdvice`
 
+##     
 
+---
 
+### API Convention
+
+#### Response
+- 
 
 ## TODO
 

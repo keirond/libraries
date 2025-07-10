@@ -16,14 +16,14 @@ import java.util.List;
 public class GrpcControllerCollector implements BeanPostProcessor {
 
   @Getter
-  private final List<BindableService> serviceDefinitions = new ArrayList<>();
+  private final List<BindableService> bindableServices = new ArrayList<>();
 
   @Override
   public Object postProcessBeforeInitialization(Object bean, @Nullable String beanName)
       throws BeansException {
     if (bean.getClass().isAnnotationPresent(GrpcController.class)) {
       if (bean instanceof BindableService) {
-        serviceDefinitions.add((BindableService) bean);
+        bindableServices.add((BindableService) bean);
         log.info("Found gRPC controller: {}", bean.getClass().getName());
       } else {
         log.warn("Found gRPC controller as unknown BindableService: {}", bean.getClass().getName());

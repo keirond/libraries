@@ -43,7 +43,7 @@ public class GrpcServer {
                           //.useTransportSecurity(serverCertChain, serverPrivateKey)
                           .addService(protoReflectionService.bindableService())
                           .addServices(grpcControllerCollector
-                              .getServiceDefinitions()
+                              .getBindableServices()
                               .stream()
                               .map(this::wrapWithInterceptors)
                               .toList())
