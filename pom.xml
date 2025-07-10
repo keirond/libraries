@@ -10,11 +10,9 @@
 
     <modules>
         <module>std-web-server</module>
-        <module>std-web-client</module>
-        <module>std-kafka</module>
 
         <module>plain-kafka-producer</module>
-        <module>plain-cassandra</module>
+
     </modules>
 
     <properties>
