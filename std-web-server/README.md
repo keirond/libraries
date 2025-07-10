@@ -1,4 +1,49 @@
-### TODO
+<style>
+  h2, h2 + * { margin-left: 0; }
+  h3, h3 + * { margin-left: 20px; }
+  h4, h4 + * { margin-left: 40px; }
+</style>
+
+I do what I think
+
+---
+
+### GRPC Server
+
+#### GRPC Server Configuration Management
+
+#### Enable GRPC TLS for Transport (!!)
+
+#### GRPC Connection Observer (!!)
+
+- Monitor connection throughput.
+- Monitor lifetime of connections.
+- Track connected frequency of peer addresses.
+
+#### GRPC Connection Pool
+
+- By default, I use `grpc-netty-shaded` or `grpc-netty` for gRPC server. It handles gRPC HTTP/2.0 connections by itself.
+- Netty have a boss group including 1-2 event loop to accept connections and a worker group including
+  typically `CPU_cores * 2` event loop to handle connection I/O.
+
+#### GRPC Proto Reflection Service
+
+#### GRPC Call Security (!!)
+
+#### GRPC Call Observer (!!)
+
+- Monitor request throughput & latency (on status, etc.)
+- Logging & Tracing (correlation_id from client or auto generated trace_id).
+
+#### GRPC Call Exception Handler (!!)
+
+---
+
+### HTTP Server
+
+###   
+
+## TODO
 
 - [ ] Data Pagination for gRPC
 - [ ] Client Streaming for gRPC
@@ -22,3 +67,10 @@
 - [ ] Graceful Shutdown / Connection Draining
 - [ ] Dynamic Configuration Reload
 - [ ] Health Check Service
+- [ ] @Scheduler and Reactive Scheduler
+- [ ] Reactive Hot Stream
+- [ ] Practical integration (R2DBC, Kafka, WebClient)
+- [ ] HTTP Connection Pool for Tomcat server (handled by Spring Boot)
+- [ ] HTTP Connection Observer
+
+- [ ] Unittest

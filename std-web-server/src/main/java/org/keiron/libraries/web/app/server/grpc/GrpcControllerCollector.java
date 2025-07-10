@@ -1,7 +1,6 @@
 package org.keiron.libraries.web.app.server.grpc;
 
 import io.grpc.BindableService;
-import io.grpc.ServerServiceDefinition;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
@@ -17,15 +16,14 @@ import java.util.List;
 public class GrpcControllerCollector implements BeanPostProcessor {
 
   @Getter
-  private final List<ServerServiceDefinition> serviceDefinitions = new ArrayList<>();
+  private final List<BindableService> serviceDefinitions = new ArrayList<>();
 
   @Override
   public Object postProcessBeforeInitialization(Object bean, @Nullable String beanName)
       throws BeansException {
     if (bean.getClass().isAnnotationPresent(GrpcController.class)) {
       if (bean instanceof BindableService) {
-        ServerServiceDefinition serviceDefinition = ((BindableService) bean).bindService();
-        serviceDefinitions.add(serviceDefinition);
+        serviceDefinitions.add((BindableService) bean);
         log.info("Found gRPC controller: {}", bean.getClass().getName());
       } else {
         log.warn("Found gRPC controller as unknown BindableService: {}", bean.getClass().getName());
