@@ -41,7 +41,21 @@ I do what I think
 
 ### HTTP Server
 
-###   
+#### HTTP Server Configuration
+
+- Let `spring-boot-starter-web` or `spring-boot-starter-webflux` take care it.
+- `spring-boot-starter-web` for Tomcat server
+- `spring-boot-starter-webflux` for Netty server
+
+#### GRPC Connection Observer (!!)
+#### GRPC Connection Pool (!!, Tomcat only)
+#### HTTP Call Security (!!)
+#### HTTP Call Observer (!!)
+#### HTTP Call Exception Handler 
+- Using `@RestControllerAdvice`
+
+
+
 
 ## TODO
 

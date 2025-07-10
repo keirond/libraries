@@ -6,17 +6,25 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.MessageOrBuilder;
+import com.google.protobuf.util.JsonFormat;
 import org.springframework.util.StringUtils;
 
 public class JSON {
 
   private static final ObjectMapper mapper = new ObjectMapper();
+  private static JsonFormat.Printer protobufPrinter = JsonFormat.printer();
 
   static {
     mapper.registerModule(new JavaTimeModule());
+    mapper.disable(SerializationFeature.INDENT_OUTPUT);
     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    mapper.enable(SerializationFeature.INDENT_OUTPUT);
     mapper.configure(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS, false);
+
+    protobufPrinter = protobufPrinter
+        .alwaysPrintFieldsWithNoPresence()
+        .omittingInsignificantWhitespace();
   }
 
   public static ObjectMapper instance() {
@@ -36,6 +44,22 @@ public class JSON {
     try {
       return StringUtils.truncate(mapper.writeValueAsString(obj), maxLength);
     } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public static <T> String toProtobufString(T obj) {
+    try {
+      return protobufPrinter.print((MessageOrBuilder) obj);
+    } catch (InvalidProtocolBufferException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public static <T> String toTruncatedProtobufString(T obj) {
+    try {
+      return StringUtils.truncate(protobufPrinter.print((MessageOrBuilder) obj));
+    } catch (InvalidProtocolBufferException e) {
       throw new RuntimeException(e);
     }
   }

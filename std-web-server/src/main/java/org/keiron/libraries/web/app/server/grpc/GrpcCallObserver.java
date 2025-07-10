@@ -24,20 +24,22 @@ public class GrpcCallObserver implements ServerInterceptor {
     var serviceName = descriptor.getServiceName();
     var methodType = descriptor.getType();
     var methodName = descriptor.getFullMethodName();
+
+    // TODO
     var correlationId = headers.get(META_CORRELATION_ID);
 
     // support unary (1-1)
     // support client streaming (n-1)
     // support server streaming (1-n)
     // support bidirectional streaming (n-m)
-    var requests = new ArrayList<>();
-    var responses = new ArrayList<>();
+    var requests = new ArrayList<String>();
+    var responses = new ArrayList<String>();
 
     var wrappedCall = new ForwardingServerCall.SimpleForwardingServerCall<>(call) {
 
       @Override
       public void sendMessage(RespT response) {
-        responses.add(JSON.toTruncatedString(response));
+        responses.add(JSON.toTruncatedProtobufString(response));
         super.sendMessage(response);
       }
 
@@ -55,7 +57,7 @@ public class GrpcCallObserver implements ServerInterceptor {
     return new ForwardingServerCallListener.SimpleForwardingServerCallListener<>(listener) {
       @Override
       public void onMessage(ReqT request) {
-        requests.add(JSON.toTruncatedString(request));
+        requests.add(JSON.toTruncatedProtobufString(request));
         super.onMessage(request);
       }
     };

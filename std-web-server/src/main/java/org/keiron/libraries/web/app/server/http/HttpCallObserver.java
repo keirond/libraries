@@ -13,6 +13,7 @@ import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,11 +32,15 @@ public class HttpCallObserver implements WebFilter {
     var uri = request.getURI();
     var url = Optional.ofNullable(uri.getPath()).orElse("") +
         Optional.ofNullable(uri.getQuery()).map("?"::concat).orElse("");
+
+    // TODO
     var correlationId = headers
         .getOrDefault("correlation-id", Collections.singletonList(UUID.randomUUID().toString()))
         .getFirst();
 
-    log.info("Incoming http.request with method: {} and url: {}", method, url);
+    // TODO
+    var requests = new ArrayList<String>();
+    var responses = new ArrayList<String>();
 
     return chain.filter(exchange).doOnSuccess(unused -> {
       var response = exchange.getResponse();
@@ -45,8 +50,9 @@ public class HttpCallObserver implements WebFilter {
           .orElse(-1);
 
       log.info(
-          "Closed http.request with method: {}, url: {}, response.status_code: {}, and duration: {}ms",
-          method, url, statusCode, Duration.between(startTime, Instant.now()).toMillis());
+          "Closed http.request with method: {}, url: {}, response.status_code: {}, duration: {}ms, and requests: {}, responses: {}",
+          method, url, statusCode, Duration.between(startTime, Instant.now()).toMillis(), requests,
+          responses);
     });
   }
 
