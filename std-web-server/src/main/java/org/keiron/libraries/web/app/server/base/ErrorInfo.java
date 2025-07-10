@@ -16,7 +16,7 @@ public class ErrorInfo {
   /**
    * The error code.
    */
-  private @Nullable String code;
+  private String code;
 
   /**
    * A description of the reason for the error.
@@ -26,7 +26,7 @@ public class ErrorInfo {
   /**
    * The parameter of the request that caused the error.
    */
-  private @Nullable String param;
+  private @Nullable String params;
 
   /**
    * A reference to the error category this error belongs to.

@@ -111,7 +111,7 @@ public class HttpCallExHandler {
         .badRequest()
         .body(new BaseRes<>().setError(ErrorInfo
             .of(ErrorE.INVALID_REQUEST)
-            .setParam(StringUtils.collectionToDelimitedString(params, ", "))
+            .setParams(StringUtils.collectionToDelimitedString(params, ", "))
             .setMessage(e.getMessage())));
   }
 
@@ -131,7 +131,7 @@ public class HttpCallExHandler {
         .badRequest()
         .body(new BaseRes<>().setError(ErrorInfo
             .of(ErrorE.INVALID_REQUEST)
-            .setParam(StringUtils.collectionToDelimitedString(params, ", "))
+            .setParams(StringUtils.collectionToDelimitedString(params, ", "))
             .setMessage(StringUtils.collectionToDelimitedString(messages, "; "))));
   }
 

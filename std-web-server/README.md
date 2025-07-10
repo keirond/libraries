@@ -37,7 +37,7 @@ I do what I think
 
 #### GRPC Call Exception Handler (!!)
 
-##     
+##                      
 
 ---
 
@@ -61,14 +61,52 @@ I do what I think
 
 - Using `@RestControllerAdvice`
 
-##     
+##                      
 
 ---
 
 ### API Convention
 
 #### Response
-- 
+
+> Object data\
+> ErrorInfo error
+> > String code <enum ErrorE>\
+> > String message [optional]\
+> > String params [optional]\
+> > String type <enum ErrorType>
+
+#### Data Pagination (!!)
+
+##                      
+
+---
+
+### Utilities
+
+#### JSON Mapper
+
+- Jackson Object Mapper
+- Google Protobuf Printer
+
+##                      
+
+---
+
+### Monitor
+
+#### Prometheus
+
+- Counter
+- Gauge
+- Timer (Histogram & 1-unit Counter)
+- Summary
+
+#### Influx (!!)
+
+##                      
+
+---
 
 ## TODO
 
@@ -100,4 +138,4 @@ I do what I think
 - [ ] HTTP Connection Pool for Tomcat server (handled by Spring Boot)
 - [ ] HTTP Connection Observer
 
-- [ ] Unittest
+- [ ] Unit Tests
