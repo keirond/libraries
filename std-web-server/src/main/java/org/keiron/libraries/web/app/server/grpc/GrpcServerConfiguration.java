@@ -12,7 +12,7 @@ import java.time.Duration;
 public class GrpcServerConfiguration {
 
   /**
-   * Server gRPC port.
+   * Internal-accessible server gRPC port.
    */
   private Integer port = 9090;
 
@@ -59,5 +59,14 @@ public class GrpcServerConfiguration {
    * The maximum size of metadata allowed to be received. Defaults to 8KiB
    */
   private Integer maxHeaderListSizeInBytes = 8192;
+
+  /**
+   * Enabled mTLS for zero-trust network in internal microservices.
+   */
+  private Boolean enableMtls = false;
+  private String certificateChain = "classpath:certs/server.crt";
+  private String privateKey = "classpath:certs/server.key";
+  private String trustCertCollection = "classpath:certs/ca.crt";
+  private Boolean clientAuthRequired = true;
 
 }
