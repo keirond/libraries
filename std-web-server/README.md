@@ -133,3 +133,5 @@ I do what I think
 - [ ] HTTP Connection Observer
 
 - [ ] Unit Tests
+- [ ] Profiling
+- [ ] Performance Testing
