@@ -1,9 +1,3 @@
-<style>
-  h2, h2 + * { margin-left: 0; }
-  h3, h3 + * { margin-left: 20px; }
-  h4, h4 + * { margin-left: 40px; }
-</style>
-
 I do what I think
 
 ---
