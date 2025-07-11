@@ -6,7 +6,7 @@ I do what I think
 
 #### GRPC Server Configuration Management
 
-#### Enable GRPC TLS for Transport (!!)
+#### Enable GRPC mTLS for Transport (!!, internal zero-trust network)
 
 #### GRPC Connection Observer (!!)
 
