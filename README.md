@@ -16,3 +16,9 @@
 #### Performance Testing
 <module>k6-http-client-caller<module>\
 <module>plain-cassandra-inserter</module>
+
+#### Chaos Testing
+##### cassandra 
+
+- scene 1: a write op, 3 nodes, 2 nodes logs commit but crash, consistency level is QUORUM)
+-> include retriable, the write op shouldn't be replayed after 2 node recover from commitlog.
