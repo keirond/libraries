@@ -20,5 +20,5 @@
 #### Chaos Testing
 ##### cassandra 
 
-- scene 1: a write op, 3 nodes, 2 nodes logs commit but crash, consistency level is QUORUM)
--> include retriable, the write op shouldn't be replayed after 2 node recover from commitlog.
+- scene 1: a write op, 3 nodes, 2 nodes logs committed but crash, consistency level is QUORUM)
+-> include retriable, the write committed logs shouldn't be replayed after 2 nodes recovery.
